@@ -17,7 +17,7 @@ export default function LoginScreen({ navigation }) {
         style={{
           marginTop: 20,
           padding: 12,
-          backgroundColor: '#00000',
+          backgroundColor: '#000',
         }}
       >
         <Text style={{ color: '#fff' }}>Go To Dashboard</Text>
