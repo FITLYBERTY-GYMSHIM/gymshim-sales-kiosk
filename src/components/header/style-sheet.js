@@ -1,15 +1,7 @@
 import { StyleSheet, Platform, StatusBar } from 'react-native';
+import { COLORS } from '../../styles/global-style-sheet';
 
-// Self-contained palette so this shared component doesn't depend on any
-// one feature. Keep these in sync with the colors used in
-// src/features/dashboard/style-sheet.js if you want a single brand source,
-// or move both into a top-level src/styles/global-style-sheet.js later.
-export const COLORS = {
-  primary: '#0E5B8F',
-  primaryDark: '#0A5A7E',
-  accent: '#E53E36',
-  white: '#FFFFFF',
-};
+
 
 export default StyleSheet.create({
   container: {
@@ -59,3 +51,4 @@ export default StyleSheet.create({
     marginLeft: 8,
   },
 });
+export { COLORS };

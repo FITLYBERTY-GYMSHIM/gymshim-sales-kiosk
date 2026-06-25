@@ -1,20 +1,11 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import { COLORS } from '../../styles/global-style-sheet';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 // Central color palette for the dashboard. Tweak these to match
 // the brand kit exactly once you have hex values from design.
-export const COLORS = {
-  primary: '#106FB2',
-  primaryDark: '#0A5A7E',
-  accent: '#E53E36',
-  background: '#F4F6F9',
-  cardBackground: '#c9e1fa',
-  border: '#DCE6EF',
-  textDark: '#20262E',
-  textMuted: '#6C7480',
-  white: '#FFFFFF',
-};
+
 
 const SCREEN_PADDING = 16;
 const CARD_GAP = 12;
@@ -23,7 +14,7 @@ const CARD_WIDTH = (SCREEN_WIDTH - SCREEN_PADDING * 2 - CARD_GAP) / 2;
 export default StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: COLORS.background,
+    backgroundColor: COLORS.screenBg,
   },
   scrollContent: {
     paddingBottom: 112,
@@ -161,7 +152,7 @@ export default StyleSheet.create({
   },
   stripCardPlan: {
     fontSize: 14,
-    color: COLORS.textMuted,
+    color: COLORS.mutedText,
     marginTop: 2,
     fontFamily: 'Nunito_600SemiBold',
   },
@@ -194,7 +185,7 @@ export default StyleSheet.create({
   },
   categorySubtitle: {
     fontSize: 15,
-    color: COLORS.textMuted,
+    color: COLORS.mutedText,
     marginTop: 1,
     fontFamily: 'Nunito_400Regular',
   },
@@ -262,7 +253,7 @@ export default StyleSheet.create({
   },
   durationLabel: {
     fontSize: 17,
-    color: COLORS.textMuted,
+    color: COLORS.mutedText,
     textTransform: 'uppercase',
     fontWeight: '700',
     marginBottom: 6,
@@ -284,12 +275,12 @@ export default StyleSheet.create({
   },
   priceUnit: {
     fontSize: 16,
-    color: COLORS.textMuted,
+    color: COLORS.mutedText,
     marginLeft: 6,
   },
   subPrice: {
     fontSize: 15,
-    color: COLORS.textMuted,
+    color: COLORS.mutedText,
     marginTop: 6,
   },
   buyButtonFull: {
@@ -337,7 +328,7 @@ export default StyleSheet.create({
   planLabel: {
     fontSize: 11,
     fontWeight: '700',
-    color: COLORS.textMuted,
+    color: COLORS.mutedText,
     marginTop: 20,
     fontFamily: 'Nunito_700Bold',
   },
@@ -354,13 +345,13 @@ export default StyleSheet.create({
   },
   planPriceSuffix: {
     fontSize: 10,
-    color: COLORS.textMuted,
+    color: COLORS.mutedText,
     marginLeft: 4,
     fontFamily: 'Nunito_600SemiBold',
   },
   planSecondary: {
     fontSize: 10,
-    color: COLORS.textMuted,
+    color: COLORS.mutedText,
     marginTop: 2,
     fontFamily: 'Nunito_400Regular',
   },
@@ -470,3 +461,5 @@ export default StyleSheet.create({
     fontSize: 12,
   },
 });
+
+export { COLORS };
