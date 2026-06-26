@@ -376,7 +376,7 @@ export default StyleSheet.create({
     position: 'absolute',
     right: 20,
     bottom:100,
-    width: 80,
+    width: 180,
     height: 80,
     borderRadius: 40,
     backgroundColor: COLORS.accent,
@@ -388,6 +388,18 @@ export default StyleSheet.create({
     shadowRadius: 6,
     shadowOffset: { width: 0, height: 3 },
   },
+  fabButton: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'center',
+},
+
+fabText: {
+  color: COLORS.white,
+  fontSize: 16,
+  fontWeight: '700',
+  marginLeft: 8,
+},
 
   selectionSummaryBar: {
     position: 'absolute',

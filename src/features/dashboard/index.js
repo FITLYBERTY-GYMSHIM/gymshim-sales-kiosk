@@ -2,33 +2,14 @@ import React, { useState } from 'react';
 import { SafeAreaView, ScrollView, View, Text, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 
-// ASSUMPTION: src/components/header exports a default component that accepts
-// `title` / `subtitle` props. Adjust this import + the props below to match
-// whatever your real Header component actually expects.
 import Header from '../../components/header';
-
+import EnquiryForm from "./modals/enquiry-form";
 import BannerAds from './components/banner-ads';
 import SplashScreenAds from './components/splash-screen-ads';
 import styles, { COLORS } from './style-sheet';
 import PlanCard from './components/plan-card';
 
-// ---- Data ----------------------------------------------------------------
-// In a real app this would come from an API / context. Hard-coded here so
-// the screen is fully functional out of the box.
-
-
-// const panResponder = useRef(
-//   PanResponder.create({
-//     onStartShouldSetPanResponder: () => true,
-//     onMoveShouldSetPanResponder: () => true,
-//     onPanResponderMove: Animated.event([null, { dx: pan.x, dy: pan.y }], {
-//       useNativeDriver: false,
-//     }),
-//     onPanResponderRelease: () => {
-//       setFabPosition({ x: pan.x._value, y: pan.y._value });
-//     },
-//   })
-// ).current;
+// ── Data ──────────────────────────────────────────────────────────────────────
 
 const MEMBERSHIP_CATEGORIES = [
   {
@@ -87,9 +68,7 @@ function formatPrice(value) {
 
 const ALL_PLANS = MEMBERSHIP_CATEGORIES.flatMap((category) => category.plans);
 
-// ---- Sub components --------------------------------------------------------
-
-// PlanCard moved to ./components/plan-card.js
+// ── Sub components ────────────────────────────────────────────────────────────
 
 function CategorySection({ category, onBuyPlan, onTogglePlan, selectedPlanMap }) {
   return (
@@ -158,56 +137,37 @@ function TopMembershipsStrip({ categories, onSelectCategory, onSeeAll }) {
   );
 }
 
-// ---- Screen ----------------------------------------------------------------
+// ── Screen ────────────────────────────────────────────────────────────────────
 
 export default function Dashboard({ navigation }) {
-  // const [fabPosition, setFabPosition] = useState({ x: 20, y: 520 });
-  // const pan = useRef(new Animated.ValueXY(fabPosition)).current;
-  const [showSplash, setShowSplash] = useState(true);
+  const [showSplash, setShowSplash]       = useState(true);
   const [selectedPlanMap, setSelectedPlanMap] = useState({});
-
-  // const panResponder = useRef(
-  //   PanResponder.create({
-  //     onStartShouldSetPanResponder: () => true,
-  //     onMoveShouldSetPanResponder: () => true,
-  //     onPanResponderMove: Animated.event([null, { dx: pan.x, dy: pan.y }], {
-  //       useNativeDriver: false,
-  //     }),
-  //     onPanResponderRelease: () => {
-  //       setFabPosition({ x: pan.x._value, y: pan.y._value });
-  //     },
-  //   })
-  // ).current;
+  const [enquiryVisible, setEnquiryVisible]   = useState(false); // ← NEW
 
   const togglePlanSelection = (plan) => {
-    setSelectedPlanMap((prev) => ({
-      ...prev,
-      [plan.id]: !prev[plan.id],
-    }));
+    setSelectedPlanMap((prev) => ({ ...prev, [plan.id]: !prev[plan.id] }));
   };
 
   const handleBuyPlan = (plan) => {
     console.log('Buy plan tapped', plan.id);
   };
 
-  const handleFabPress = () => {
-    // TODO: wire this up to features/dashboard/modals/enquiry-form.js
-    // e.g. navigation.navigate('EnquiryForm')
-    console.log('FAB tapped — open enquiry form');
-  };
-
-  const selectedPlans = ALL_PLANS.filter((plan) => selectedPlanMap[plan.id]);
+  const selectedPlans      = ALL_PLANS.filter((plan) => selectedPlanMap[plan.id]);
   const selectedPlansCount = selectedPlans.length;
-  const selectedTotal = selectedPlans.reduce((sum, plan) => sum + plan.price, 0);
+  const selectedTotal      = selectedPlans.reduce((sum, plan) => sum + plan.price, 0);
 
   return (
     <SafeAreaView style={styles.screen}>
+
       <View style={styles.heroShell}>
         <Header title="PULSE FITNESS" subtitle="Pune's Premier Fitness Studio" />
         <BannerAds />
       </View>
 
-      <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
         <TopMembershipsStrip
           categories={MEMBERSHIP_CATEGORIES}
           onSelectCategory={() => {}}
@@ -225,25 +185,43 @@ export default function Dashboard({ navigation }) {
         ))}
       </ScrollView>
 
-      {selectedPlansCount > 0 ? (
+      {/* Selection summary bar */}
+      {selectedPlansCount > 0 && (
         <View style={styles.selectionSummaryBar}>
           <View>
             <Text style={styles.selectionSummaryCount}>{selectedPlansCount} plans selected</Text>
             <Text style={styles.selectionSummaryTotal}>{formatPrice(selectedTotal)}</Text>
           </View>
-
           <TouchableOpacity style={styles.selectionSummaryNextButton} activeOpacity={0.85}>
             <Text style={styles.selectionSummaryNextText}>Next</Text>
           </TouchableOpacity>
         </View>
-      ) : null}
-      <View style={styles.fab}>
-        <TouchableOpacity onPress={handleFabPress} activeOpacity={0.85}>
-          <Ionicons name="add" size={40} color={COLORS.white} />
-        </TouchableOpacity>
-      </View>
+      )}
 
-      <SplashScreenAds visible={showSplash} onDismiss={() => setShowSplash(false)} />
+      {/* FAB — tap karo toh enquiry drawer khulega */}
+     <View style={styles.fab}>
+  <TouchableOpacity
+    onPress={() => setEnquiryVisible(true)}
+    activeOpacity={0.85}
+    style={styles.fabButton}
+  >
+    <Ionicons name="add" size={28} color={COLORS.white} />
+    <Text style={styles.fabText}>ADD ENQUIRY</Text>
+  </TouchableOpacity>
+</View>
+
+      {/* Enquiry Form Bottom Drawer */}
+      <EnquiryForm
+        visible={enquiryVisible}
+        onClose={() => setEnquiryVisible(false)}
+      />
+
+      {/* Splash screen */}
+      <SplashScreenAds
+        visible={showSplash}
+        onDismiss={() => setShowSplash(false)}
+      />
+
     </SafeAreaView>
   );
 }
