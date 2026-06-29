@@ -19,7 +19,7 @@ export default StyleSheet.create({
     backgroundColor: COLORS.screenBg,
   },
   scrollContent: {
-    paddingBottom: 112,
+    paddingBottom: 140,
   },
 
   heroShell: {
@@ -51,7 +51,7 @@ export default StyleSheet.create({
     color: COLORS.white,
     fontSize: 24,
     fontWeight: '800',
-    fontFamily: 'Nunito_800ExtraBold',
+    // fontFamily: 'Nunito_800ExtraBold',
     maxWidth: 230,
   },
   bannerSubtitle: {
@@ -59,7 +59,7 @@ export default StyleSheet.create({
     fontSize: 13,
     marginTop: 6,
     opacity: 0.9,
-    fontFamily: 'Nunito_600SemiBold',
+    // fontFamily: 'Nunito_600SemiBold',
     maxWidth: 220,
   },
   dotsContainer: {
@@ -107,13 +107,13 @@ export default StyleSheet.create({
     fontWeight: '700',
     color: COLORS.textDark,
     letterSpacing: 0.3,
-    fontFamily: 'Nunito_800ExtraBold',
+    // fontFamily: 'Nunito_800ExtraBold',
   },
   seeAllText: {
     fontSize: 14,
     color: COLORS.primary,
     fontWeight: '600',
-    fontFamily: 'Nunito_700Bold',
+    // fontFamily: 'Nunito_700Bold',
   },
   stripContent: {
     paddingHorizontal: SCREEN_PADDING,
@@ -150,20 +150,20 @@ export default StyleSheet.create({
     fontSize: 15,
     fontWeight: '700',
     color: COLORS.textDark,
-    fontFamily: 'Nunito_700Bold',
+    // fontFamily: 'Nunito_700Bold',
   },
   stripCardPlan: {
     fontSize: 14,
     color: COLORS.mutedText,
     marginTop: 2,
-    fontFamily: 'Nunito_600SemiBold',
+    // fontFamily: 'Nunito_600SemiBold',
   },
   stripCardPrice: {
     fontSize: 17,
     fontWeight: '700',
     color: COLORS.primary,
     marginTop: 4,
-    fontFamily: 'Nunito_800ExtraBold',
+    // fontFamily: 'Nunito_800ExtraBold',
   },
 
   // ---------- Category sections (Gym Workout, PT, Group Exercise, Liberty) ----------
@@ -174,7 +174,7 @@ export default StyleSheet.create({
   categoryHeader: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    marginBottom: 8,
+    marginBottom: 2,
   },
   categoryHeaderText: {
     marginLeft: 8,
@@ -183,13 +183,13 @@ export default StyleSheet.create({
     fontSize: 20,
     fontWeight: '700',
     color: COLORS.textDark,
-    fontFamily: 'Nunito_800ExtraBold',
+    // fontFamily: 'Nunito_800ExtraBold',
   },
   categorySubtitle: {
     fontSize: 15,
     color: COLORS.mutedText,
     marginTop: 1,
-    fontFamily: 'Nunito_400Regular',
+    // fontFamily: 'Nunito_600SemiBold',
   },
   plansGrid: {
     flexDirection: 'row',
@@ -202,7 +202,7 @@ export default StyleSheet.create({
     borderRadius: 12,
     borderWidth: 1,
     borderColor: 'transparent',
-    padding: 20,
+    padding: 14,
     marginBottom: CARD_GAP,
     minHeight: 160,
     justifyContent: 'flex-start',
@@ -217,11 +217,11 @@ export default StyleSheet.create({
     borderColor: '#0D2B52',
   },
   cardHeaderRow: {
-    height: 36,
+    height: 20,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    marginBottom: 8,
+    marginBottom: 2,
   },
   popularBadge: {
     alignSelf: 'flex-start',
@@ -258,13 +258,13 @@ export default StyleSheet.create({
     color: COLORS.mutedText,
     textTransform: 'uppercase',
     fontWeight: '700',
-    marginBottom: 6,
+    marginBottom: 4,
   },
   durationRow: {            
     flexDirection: 'row',
     alignItems: 'center',
     gap:8,
-    marginBottom: 6,         
+    marginBottom: 4,         
   },
   priceRow: {
     flexDirection: 'row',
@@ -314,7 +314,7 @@ export default StyleSheet.create({
     color: COLORS.white,
     fontSize: 9,
     fontWeight: '700',
-    fontFamily: 'Nunito_700Bold',
+    // fontFamily: 'Nunito_700Bold',
   },
   planCheckBox: {
     position: 'absolute',
@@ -332,13 +332,13 @@ export default StyleSheet.create({
     fontWeight: '700',
     color: COLORS.mutedText,
     marginTop: 20,
-    fontFamily: 'Nunito_700Bold',
+    // fontFamily: 'Nunito_700Bold',
   },
   planPrice: {
     fontSize: 18,
     fontWeight: '800',
     color: COLORS.textDark,
-    fontFamily: 'Nunito_800ExtraBold',
+    // fontFamily: 'Nunito_800ExtraBold',
   },
   planPriceLine: {
     flexDirection: 'row',
@@ -349,13 +349,13 @@ export default StyleSheet.create({
     fontSize: 10,
     color: COLORS.mutedText,
     marginLeft: 4,
-    fontFamily: 'Nunito_600SemiBold',
+    // fontFamily: 'Nunito_600SemiBold',
   },
   planSecondary: {
     fontSize: 10,
     color: COLORS.mutedText,
     marginTop: 2,
-    fontFamily: 'Nunito_400Regular',
+    // fontFamily: 'Nunito_400Regular',
   },
   buyButton: {
     backgroundColor: '#DDE6EF',
@@ -368,7 +368,7 @@ export default StyleSheet.create({
     color: '#4B5563',
     fontSize: 12,
     fontWeight: '700',
-    fontFamily: 'Nunito_700Bold',
+    // fontFamily: 'Nunito_700Bold',
   },
 
   // ---------- Floating action button ----------
@@ -391,13 +391,13 @@ export default StyleSheet.create({
 
   selectionSummaryBar: {
     position: 'absolute',
-    left: 12,
-    right: 12,
-    bottom: 16,
-    backgroundColor: '#0D2B52',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: COLORS.accent,
     borderRadius: 14,
     paddingHorizontal: 14,
-    paddingVertical: 12,
+    paddingVertical: 18,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -409,28 +409,28 @@ export default StyleSheet.create({
   },
   selectionSummaryCount: {
     color: COLORS.white,
-    fontSize: 13,
+    fontSize: 15,
     fontWeight: '700',
-    fontFamily: 'Nunito_700Bold',
+    // fontFamily: 'Nunito_700Bold',
   },
   selectionSummaryTotal: {
     color: COLORS.white,
-    fontSize: 16,
+    fontSize: 20,
     marginTop: 2,
     fontWeight: '800',
-    fontFamily: 'Nunito_800ExtraBold',
+    // fontFamily: 'Nunito_800ExtraBold',
   },
   selectionSummaryNextButton: {
     backgroundColor: COLORS.white,
     borderRadius: 999,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingHorizontal: 26,
+    paddingVertical: 12,
   },
   selectionSummaryNextText: {
-    color: '#0D2B52',
-    fontSize: 13,
+    color: COLORS.primaryDark,
+    fontSize: 15,
     fontWeight: '800',
-    fontFamily: 'Nunito_800ExtraBold',
+    // fontFamily: 'Nunito_800ExtraBold',
   },
 
   // ---------- Splash screen ads (attract / idle screen) ----------

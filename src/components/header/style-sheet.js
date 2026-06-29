@@ -29,7 +29,7 @@ export default StyleSheet.create({
     color: COLORS.white,
     fontSize: 15,
     fontWeight: '800',
-    fontFamily: 'Nunito_800ExtraBold',
+    // fontFamily: 'Nunito_800ExtraBold',
   },
   textWrapper: {
     flex: 1,
@@ -38,14 +38,14 @@ export default StyleSheet.create({
     color: COLORS.white,
     fontSize: 18,
     fontWeight: '800',
-    fontFamily: 'Nunito_800ExtraBold',
+    // fontFamily: 'Nunito_800ExtraBold',
     letterSpacing: 0.3,
   },
   subtitle: {
     color: 'rgba(255,255,255,0.85)',
     fontSize: 10,
     marginTop: 2,
-    fontFamily: 'Nunito_600SemiBold',
+    // fontFamily: 'Nunito_600SemiBold',
   },
   rightSlot: {
     marginLeft: 8,

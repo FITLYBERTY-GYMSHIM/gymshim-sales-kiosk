@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StatusBar } from 'react-native';
+import { View, TouchableOpacity, StatusBar } from 'react-native';
+import Text from '../text';
 import { Ionicons } from '@expo/vector-icons';
 import styles, { COLORS } from './style-sheet';
 
@@ -30,16 +31,16 @@ export default function Header({
           </TouchableOpacity>
         ) : (
           <View style={styles.logoBox}>
-            <Text style={styles.logoText}>{logoText}</Text>
+            <Text style={styles.logoText} varient="black">{logoText}</Text>
           </View>
         )}
 
         <View style={styles.textWrapper}>
-          <Text style={styles.title} numberOfLines={1}>
+          <Text style={styles.title} numberOfLines={1} varient="extrablod">
             {title}
           </Text>
           {subtitle ? (
-            <Text style={styles.subtitle} numberOfLines={1}>
+            <Text style={styles.subtitle} numberOfLines={1} variant="regular">
               {subtitle}
             </Text>
           ) : null}
