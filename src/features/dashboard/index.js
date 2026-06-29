@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { SafeAreaView, ScrollView, View, Text, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
-
+import Membershipbilling from './modals/membership-billing';
 // ASSUMPTION: src/components/header exports a default component that accepts
 // `title` / `subtitle` props. Adjust this import + the props below to match
 // whatever your real Header component actually expects.
@@ -165,7 +165,7 @@ export default function Dashboard({ navigation }) {
   // const pan = useRef(new Animated.ValueXY(fabPosition)).current;
   const [showSplash, setShowSplash] = useState(true);
   const [selectedPlanMap, setSelectedPlanMap] = useState({});
-
+  const [showBilling, setShowBilling] = useState(false);
   // const panResponder = useRef(
   //   PanResponder.create({
   //     onStartShouldSetPanResponder: () => true,
@@ -232,7 +232,9 @@ export default function Dashboard({ navigation }) {
             <Text style={styles.selectionSummaryTotal}>{formatPrice(selectedTotal)}</Text>
           </View>
 
-          <TouchableOpacity style={styles.selectionSummaryNextButton} activeOpacity={0.85}>
+          <TouchableOpacity style={styles.selectionSummaryNextButton} activeOpacity={0.85}
+          onPress={() => setShowBilling(true)}
+          >
             <Text style={styles.selectionSummaryNextText}>Next</Text>
           </TouchableOpacity>
         </View>
@@ -244,6 +246,11 @@ export default function Dashboard({ navigation }) {
       </View>
 
       <SplashScreenAds visible={showSplash} onDismiss={() => setShowSplash(false)} />
+        <Membershipbilling visible=
+        {showBilling}
+        onClose={() => setShowBilling(false)}
+        selectedPlans={selectedPlans}
+        />
     </SafeAreaView>
   );
 }

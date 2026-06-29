@@ -9,3 +9,8 @@ export const COLORS = {
   textDark: '#20262E',
   mutedText: '#6C7480',      
 };
+export const FONTS = {
+  regular: "Nunito_400Regular",
+  semiBold: "Nunito_600SemiBold",
+  bold:    "Nunito_700Bold",
+};

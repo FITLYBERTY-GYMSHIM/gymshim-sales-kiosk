@@ -1,0 +1,482 @@
+{
+  "memberships": [
+    {
+      "userInfo": {
+        "name": "Sayan Deb",
+        "phone": "231456789",
+        "phoneCountryCode": "91"
+      },
+      "plan_id": "gw-annual",
+      "total": "18998",
+      "currency": "INR",
+      "currency_sign": "₹",
+      "duration": "year",
+      "status": "active",
+      "state": "ACTIVE",
+      "sale_type": "FRESH_SALE",
+      "is_active": true,
+      "draft": false,
+      "starts_at": "2026-06-27T09:42:27.941Z",
+      "starts_at_string": "Sat Jun 27 2026",
+      "billedInfo": {
+        "payableAmount": "18998"
+      },
+      "createdAt": "2026-06-27T09:42:27.941Z",
+      "id": "Emp-Eq4f_Tc"
+    },
+    {
+      "userInfo": {
+        "name": "Sayan Deb",
+        "phone": "23456789",
+        "phoneCountryCode": "91"
+      },
+      "plan_id": "gw-annual",
+      "total": "18998",
+      "currency": "INR",
+      "currency_sign": "₹",
+      "duration": "year",
+      "status": "active",
+      "state": "ACTIVE",
+      "sale_type": "FRESH_SALE",
+      "is_active": true,
+      "draft": false,
+      "starts_at": "2026-06-27T09:46:30.307Z",
+      "starts_at_string": "Sat Jun 27 2026",
+      "billedInfo": {
+        "payableAmount": "18998"
+      },
+      "createdAt": "2026-06-27T09:46:30.307Z",
+      "id": "6nuL9oiyB3s"
+    },
+    {
+      "userInfo": {
+        "name": "Sayan Deb",
+        "phone": "2134567890",
+        "phoneCountryCode": "91"
+      },
+      "birthDate": "27-06-2026",
+      "maritalStatus": "Single",
+      "anniversaryDate": "",
+      "gender": "Male",
+      "gstin": "",
+      "plan_id": "gw-annual",
+      "duration": "year",
+      "total": "18998",
+      "plans": [
+        {
+          "id": "gw-annual",
+          "label": "ANNUAL",
+          "duration": "year",
+          "price": 11999
+        },
+        {
+          "id": "gw-6m",
+          "label": "6 MONTHS",
+          "duration": "6 months",
+          "price": 6999
+        }
+      ],
+      "billedInfo": {
+        "payableAmount": "18998"
+      },
+      "currency": "INR",
+      "currency_sign": "₹",
+      "status": "active",
+      "state": "ACTIVE",
+      "sale_type": "FRESH_SALE",
+      "is_active": true,
+      "draft": false,
+      "starts_at": "2026-06-27T09:48:21.146Z",
+      "starts_at_string": "Sat Jun 27 2026",
+      "createdAt": "2026-06-27T09:48:21.146Z",
+      "id": "yuuLlEl-EBU"
+    },
+    {
+      "userInfo": {
+        "name": "Sayan Deb",
+        "phone": "231456789",
+        "phoneCountryCode": "91"
+      },
+      "birthDate": "27-06-2026",
+      "maritalStatus": "Single",
+      "anniversaryDate": "",
+      "gender": "Male",
+      "gstin": "",
+      "plan_id": "gw-annual",
+      "duration": "year",
+      "total": "18998",
+      "plans": [
+        {
+          "id": "gw-annual",
+          "label": "ANNUAL",
+          "duration": "year",
+          "price": 11999
+        },
+        {
+          "id": "gw-6m",
+          "label": "6 MONTHS",
+          "duration": "6 months",
+          "price": 6999
+        }
+      ],
+      "billedInfo": {
+        "payableAmount": "18998"
+      },
+      "currency": "INR",
+      "currency_sign": "₹",
+      "status": "active",
+      "state": "ACTIVE",
+      "sale_type": "FRESH_SALE",
+      "is_active": true,
+      "draft": false,
+      "starts_at": "2026-06-27T09:51:09.403Z",
+      "starts_at_string": "Sat Jun 27 2026",
+      "createdAt": "2026-06-27T09:51:09.403Z",
+      "id": "fqn5oJ9or98"
+    },
+    {
+      "userInfo": {
+        "name": "Sayan Deb",
+        "phone": "8837297329",
+        "phoneCountryCode": "91"
+      },
+      "birthDate": "14-07-2004",
+      "maritalStatus": "Single",
+      "anniversaryDate": "",
+      "gender": "Male",
+      "gstin": "",
+      "plan_id": "gw-annual",
+      "duration": "year",
+      "total": "18998",
+      "plans": [
+        {
+          "id": "gw-annual",
+          "label": "ANNUAL",
+          "duration": "year",
+          "price": 11999
+        },
+        {
+          "id": "gw-6m",
+          "label": "6 MONTHS",
+          "duration": "6 months",
+          "price": 6999
+        }
+      ],
+      "billedInfo": {
+        "payableAmount": "18998"
+      },
+      "currency": "INR",
+      "currency_sign": "₹",
+      "status": "active",
+      "state": "ACTIVE",
+      "sale_type": "FRESH_SALE",
+      "is_active": true,
+      "draft": false,
+      "starts_at": "2026-06-27T10:23:59.485Z",
+      "starts_at_string": "Sat Jun 27 2026",
+      "createdAt": "2026-06-27T10:23:59.485Z",
+      "id": "ny4rwcwLbZA"
+    },
+    {
+      "userInfo": {
+        "name": "Sayan Deb",
+        "phone": "23456789",
+        "phoneCountryCode": "91"
+      },
+      "birthDate": "23-45-6723",
+      "maritalStatus": "Single",
+      "anniversaryDate": "",
+      "gender": "Male",
+      "gstin": "",
+      "plan_id": "gw-annual",
+      "duration": "year",
+      "total": "18998",
+      "plans": [
+        {
+          "id": "gw-annual",
+          "label": "ANNUAL",
+          "duration": "year",
+          "price": 11999
+        },
+        {
+          "id": "gw-6m",
+          "label": "6 MONTHS",
+          "duration": "6 months",
+          "price": 6999
+        }
+      ],
+      "billedInfo": {
+        "payableAmount": "18998"
+      },
+      "currency": "INR",
+      "currency_sign": "₹",
+      "status": "active",
+      "state": "ACTIVE",
+      "sale_type": "FRESH_SALE",
+      "is_active": true,
+      "draft": false,
+      "starts_at": "2026-06-27T10:29:03.218Z",
+      "starts_at_string": "Sat Jun 27 2026",
+      "createdAt": "2026-06-27T10:29:03.218Z",
+      "id": "M-hRr9Q1BBE"
+    },
+    {
+      "userInfo": {
+        "name": "Sayan Deb",
+        "phone": "3245678",
+        "phoneCountryCode": "91"
+      },
+      "birthDate": "34-56-78",
+      "maritalStatus": "Single",
+      "anniversaryDate": "",
+      "gender": "Male",
+      "gstin": "",
+      "plan_id": "gw-annual",
+      "duration": "year",
+      "total": "18998",
+      "plans": [
+        {
+          "id": "gw-annual",
+          "label": "ANNUAL",
+          "duration": "year",
+          "price": 11999
+        },
+        {
+          "id": "gw-6m",
+          "label": "6 MONTHS",
+          "duration": "6 months",
+          "price": 6999
+        }
+      ],
+      "billedInfo": {
+        "payableAmount": "18998"
+      },
+      "currency": "INR",
+      "currency_sign": "₹",
+      "status": "active",
+      "state": "ACTIVE",
+      "sale_type": "FRESH_SALE",
+      "is_active": true,
+      "draft": false,
+      "starts_at": "2026-06-27T10:34:56.274Z",
+      "starts_at_string": "Sat Jun 27 2026",
+      "createdAt": "2026-06-27T10:34:56.274Z",
+      "id": "onq51UG2JZw"
+    },
+    {
+      "userInfo": {
+        "name": "Sayan Deb",
+        "phone": "432567980",
+        "phoneCountryCode": "91"
+      },
+      "birthDate": "21-34-5678",
+      "maritalStatus": "Single",
+      "anniversaryDate": "",
+      "gender": "Male",
+      "gstin": "",
+      "plan_id": "gw-annual",
+      "duration": "year",
+      "total": "18998",
+      "plans": [
+        {
+          "id": "gw-annual",
+          "label": "ANNUAL",
+          "duration": "year",
+          "price": 11999
+        },
+        {
+          "id": "gw-6m",
+          "label": "6 MONTHS",
+          "duration": "6 months",
+          "price": 6999
+        }
+      ],
+      "billedInfo": {
+        "payableAmount": "18998"
+      },
+      "currency": "INR",
+      "currency_sign": "₹",
+      "status": "active",
+      "state": "ACTIVE",
+      "sale_type": "FRESH_SALE",
+      "is_active": true,
+      "draft": false,
+      "starts_at": "2026-06-27T10:42:18.562Z",
+      "starts_at_string": "Sat Jun 27 2026",
+      "createdAt": "2026-06-27T10:42:18.562Z",
+      "id": "7I-_RWnikgc"
+    },
+    {
+      "userInfo": {
+        "name": "Sayan Deb",
+        "phone": "787878787",
+        "phoneCountryCode": "91"
+      },
+      "birthDate": "20-06-2026",
+      "maritalStatus": "Single",
+      "anniversaryDate": "26-06-2026",
+      "gender": "Female",
+      "gstin": "",
+      "plan_id": "gw-annual",
+      "duration": "year",
+      "total": "13498",
+      "plans": [
+        {
+          "id": "gw-annual",
+          "label": "ANNUAL",
+          "duration": "year",
+          "price": 11999
+        },
+        {
+          "id": "gw-monthly",
+          "label": "MONTHLY",
+          "duration": "month",
+          "price": 1499
+        }
+      ],
+      "billedInfo": {
+        "payableAmount": "13498"
+      },
+      "currency": "INR",
+      "currency_sign": "₹",
+      "status": "active",
+      "state": "ACTIVE",
+      "sale_type": "FRESH_SALE",
+      "is_active": true,
+      "draft": false,
+      "starts_at": "2026-06-27T10:44:49.842Z",
+      "starts_at_string": "Sat Jun 27 2026",
+      "createdAt": "2026-06-27T10:44:49.842Z",
+      "id": "w0wlNxHyH1c"
+    }
+  ],
+  "payments": [
+    {
+      "membershipId": "Emp-Eq4f_Tc",
+      "amount": "18998",
+      "status": "SUCCESS",
+      "mode": "UPI",
+      "source": "APP",
+      "draft": false,
+      "invoiceDate": "2026-06-27T09:42:27.980Z",
+      "invoiceDateString": "Sat Jun 27 2026",
+      "paymentDate": "2026-06-27T09:42:27.980Z",
+      "paymentDateString": "Sat Jun 27 2026",
+      "createdAt": "2026-06-27T09:42:27.980Z",
+      "id": "UWByY2NEJgE"
+    },
+    {
+      "membershipId": "6nuL9oiyB3s",
+      "amount": "18998",
+      "status": "SUCCESS",
+      "mode": "UPI",
+      "source": "APP",
+      "draft": false,
+      "invoiceDate": "2026-06-27T09:46:30.352Z",
+      "invoiceDateString": "Sat Jun 27 2026",
+      "paymentDate": "2026-06-27T09:46:30.352Z",
+      "paymentDateString": "Sat Jun 27 2026",
+      "createdAt": "2026-06-27T09:46:30.352Z",
+      "id": "TcGm86SSTME"
+    },
+    {
+      "membershipId": "yuuLlEl-EBU",
+      "amount": "18998",
+      "status": "SUCCESS",
+      "mode": "UPI",
+      "source": "APP",
+      "draft": false,
+      "invoiceDate": "2026-06-27T09:48:21.182Z",
+      "invoiceDateString": "Sat Jun 27 2026",
+      "paymentDate": "2026-06-27T09:48:21.182Z",
+      "paymentDateString": "Sat Jun 27 2026",
+      "createdAt": "2026-06-27T09:48:21.182Z",
+      "id": "V-YjiTrAn4k"
+    },
+    {
+      "membershipId": "fqn5oJ9or98",
+      "amount": "18998",
+      "status": "SUCCESS",
+      "mode": "UPI",
+      "source": "APP",
+      "draft": false,
+      "invoiceDate": "2026-06-27T09:51:09.445Z",
+      "invoiceDateString": "Sat Jun 27 2026",
+      "paymentDate": "2026-06-27T09:51:09.445Z",
+      "paymentDateString": "Sat Jun 27 2026",
+      "createdAt": "2026-06-27T09:51:09.445Z",
+      "id": "eNMh_BTimgM"
+    },
+    {
+      "membershipId": "ny4rwcwLbZA",
+      "amount": "18048",
+      "status": "SUCCESS",
+      "mode": "UPI",
+      "source": "APP",
+      "draft": false,
+      "invoiceDate": "2026-06-27T10:23:59.525Z",
+      "invoiceDateString": "Sat Jun 27 2026",
+      "paymentDate": "2026-06-27T10:23:59.525Z",
+      "paymentDateString": "Sat Jun 27 2026",
+      "createdAt": "2026-06-27T10:23:59.525Z",
+      "id": "1LO3mTWLltY"
+    },
+    {
+      "membershipId": "M-hRr9Q1BBE",
+      "amount": "18048",
+      "status": "SUCCESS",
+      "mode": "UPI",
+      "source": "APP",
+      "draft": false,
+      "invoiceDate": "2026-06-27T10:29:03.240Z",
+      "invoiceDateString": "Sat Jun 27 2026",
+      "paymentDate": "2026-06-27T10:29:03.240Z",
+      "paymentDateString": "Sat Jun 27 2026",
+      "createdAt": "2026-06-27T10:29:03.240Z",
+      "id": "ptaR4DXwDLI"
+    },
+    {
+      "membershipId": "onq51UG2JZw",
+      "amount": "18048",
+      "status": "SUCCESS",
+      "mode": "UPI",
+      "source": "APP",
+      "draft": false,
+      "invoiceDate": "2026-06-27T10:34:56.295Z",
+      "invoiceDateString": "Sat Jun 27 2026",
+      "paymentDate": "2026-06-27T10:34:56.295Z",
+      "paymentDateString": "Sat Jun 27 2026",
+      "createdAt": "2026-06-27T10:34:56.295Z",
+      "id": "YuVgmQ_O_IM"
+    },
+    {
+      "membershipId": "7I-_RWnikgc",
+      "amount": "18048",
+      "status": "SUCCESS",
+      "mode": "UPI",
+      "source": "APP",
+      "draft": false,
+      "invoiceDate": "2026-06-27T10:42:18.585Z",
+      "invoiceDateString": "Sat Jun 27 2026",
+      "paymentDate": "2026-06-27T10:42:18.585Z",
+      "paymentDateString": "Sat Jun 27 2026",
+      "createdAt": "2026-06-27T10:42:18.585Z",
+      "id": "YXXrxVVDHzM"
+    },
+    {
+      "membershipId": "w0wlNxHyH1c",
+      "amount": "12823",
+      "status": "SUCCESS",
+      "mode": "UPI",
+      "source": "APP",
+      "draft": false,
+      "invoiceDate": "2026-06-27T10:44:49.866Z",
+      "invoiceDateString": "Sat Jun 27 2026",
+      "paymentDate": "2026-06-27T10:44:49.866Z",
+      "paymentDateString": "Sat Jun 27 2026",
+      "createdAt": "2026-06-27T10:44:49.866Z",
+      "id": "yput1u3EGEE"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
