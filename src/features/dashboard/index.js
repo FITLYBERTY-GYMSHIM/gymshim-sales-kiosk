@@ -13,6 +13,8 @@ import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 
 import Membershipbilling from './modals/membership-billing';
 import Header from '../../components/header';
+// import Header from '../../components/header';
+import EnquiryPopup from "./modals/enquiry-form";   // ← new popup
 import BannerAds from './components/banner-ads';
 import SplashScreenAds from './components/splash-screen-ads';
 import styles, { COLORS } from './style-sheet';
@@ -39,17 +41,9 @@ function CategorySection({ category, onBuyPlan, onTogglePlan, selectedPlanMap })
         </View>
       </View>
       <View style={styles.plansGrid}>
-        {category.plans.map(function (plan) {
-          return (
-            <PlanCard
-              key={plan.id}
-              plan={plan}
-              onBuy={onBuyPlan}
-              onToggle={onTogglePlan}
-              selected={Boolean(selectedPlanMap[plan.id])}
-            />
-          );
-        })}
+        {category.plans.map(plan => (
+          <PlanCard key={plan.id} plan={plan} onBuy={onBuyPlan} onToggle={onTogglePlan} selected={Boolean(selectedPlanMap[plan.id])} />
+        ))}
       </View>
     </View>
   );
@@ -63,32 +57,17 @@ function TopMembershipsStrip({ categories, onSelectCategory, onSeeAll }) {
           <View style={styles.sectionHeaderAccent} />
           <Text style={styles.sectionHeaderTitle}>TOP MEMBERSHIPS</Text>
         </View>
-        <TouchableOpacity onPress={onSeeAll}>
-          <Text style={styles.seeAllText}>See all</Text>
-        </TouchableOpacity>
+        <TouchableOpacity onPress={onSeeAll}><Text style={styles.seeAllText}>See all</Text></TouchableOpacity>
       </View>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.stripContent}
-      >
-        {categories.map(function (cat) {
-          var featured = cat.plans[0];
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.stripContent}>
+        {categories.map(cat => {
+          const f = cat.plans[0];
           return (
-            <TouchableOpacity
-              key={cat.id}
-              style={styles.stripCard}
-              onPress={function () { onSelectCategory(cat.id); }}
-              activeOpacity={0.85}
-            >
-              {featured.badge ? (
-                <View style={styles.stripBadge}>
-                  <Text style={styles.stripBadgeText}>{featured.badge}</Text>
-                </View>
-              ) : null}
+            <TouchableOpacity key={cat.id} style={styles.stripCard} onPress={() => onSelectCategory(cat.id)} activeOpacity={0.85}>
+              {f.badge ? <View style={styles.stripBadge}><Text style={styles.stripBadgeText}>{f.badge}</Text></View> : null}
               <Text style={styles.stripCardTitle}>{cat.title}</Text>
-              <Text style={styles.stripCardPlan}>{featured.label}</Text>
-              <Text style={styles.stripCardPrice}>{formatPrice(featured.price)}</Text>
+              <Text style={styles.stripCardPlan}>{f.label} Plan</Text>
+              <Text style={styles.stripCardPrice}>{formatPrice(f.price)}</Text>
             </TouchableOpacity>
           );
         })}
@@ -138,19 +117,30 @@ export default function Dashboard({ navigation }) {
   var [showBilling, setShowBilling] = useState(false);
   var [showTrainers, setShowTrainers] = useState(false); 
 
+  
+  
+  const [enquiryVisible,  setEnquiryVisible]  = useState(false); // ← popup state
+
+  const togglePlanSelection = plan => setSelectedPlanMap(prev => ({ ...prev, [plan.id]: !prev[plan.id] }));
+  //const handleBuyPlan       = plan => console.log('Buy plan tapped', plan.id);
+
+  //const selectedPlans      = ALL_PLANS.filter(p => selectedPlanMap[p.id]);
+  // const selectedPlansCount = selectedPlans.length;
+  // const selectedTotal      = selectedPlans.reduce((s, p) => s + p.price, 0);
+
   var membershipData = useMemberships();
   var categories = membershipData.categories;
   var loading = membershipData.loading;
   var error = membershipData.error;
   var refetch = membershipData.refetch;
 
-  function togglePlanSelection(plan) {
-    setSelectedPlanMap(function (prev) {
-      var next = Object.assign({}, prev);
-      next[plan.id] = !next[plan.id];
-      return next;
-    });
-  }
+  // function togglePlanSelection(plan) {
+  //   setSelectedPlanMap(function (prev) {
+  //     var next = Object.assign({}, prev);
+  //     next[plan.id] = !next[plan.id];
+  //     return next;
+  //   });
+  // }
   function handleTopMembershipPress(categoryId) {
     var category = categories.find(function (cat) { return cat.id === categoryId; });
     if (!category || !category.plans[0]) return;
@@ -193,6 +183,7 @@ export default function Dashboard({ navigation }) {
 
   return (
     <SafeAreaView style={styles.screen}>
+
       <View style={styles.heroShell}>
         <Header title="PULSE FITNESS" subtitle="Pune's Premier Fitness Studio" />
         <BannerAds />
@@ -276,6 +267,24 @@ export default function Dashboard({ navigation }) {
           </TouchableOpacity>
         </View>
       )}
+
+      {/* <SplashScreenAds visible={showSplash} onDismiss={function () { setShowSplash(false); }} /> */}
+          {/* <TouchableOpacity style={styles.selectionSummaryNextButton} activeOpacity={0.85}>
+            <Text style={styles.selectionSummaryNextText}>Next</Text>
+          </TouchableOpacity>
+        </View>
+      )} */}
+
+      {/* FAB */}
+      <View style={styles.fab}>
+        <TouchableOpacity onPress={() => setEnquiryVisible(true)} activeOpacity={0.85} style={styles.fabButton}>
+          <Ionicons name="add" size={28} color={COLORS.white} />
+          <Text style={styles.fabText}>ADD ENQUIRY</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Enquiry Popup */}
+      <EnquiryPopup visible={enquiryVisible} onClose={() => setEnquiryVisible(false)} />
 
       <SplashScreenAds visible={showSplash} onDismiss={() => setShowSplash(false)} />
 
