@@ -7,5 +7,6 @@ export const COLORS = {
   cardBackground: '#c9e1fa',
   border: '#DCE6EF',
   textDark: '#20262E',
-  mutedText: '#6C7480',      
+  mutedText: '#6C7480',  
+      
 };
