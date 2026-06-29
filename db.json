@@ -1,0 +1,110 @@
+{
+  "enquiry": [
+    {
+      "userInfo": {
+        "first_name": "Arup",
+        "last_name": "Deb",
+        "full_name": "Arup Deb",
+        "email": "arupdeb659@gmail.com",
+        "phone": "k lj jl",
+        "gender": "",
+        "marital_status": "Single",
+        "date_of_birth": null,
+        "date_of_birth_string": null,
+        "anniversary_date": null,
+        "anniversary_date_string": null
+      },
+      "whereHeardAboutUs": "Friend / Family",
+      "nameOfAttendant": "Trainer B",
+      "servicesOffered": "",
+      "approxJoiningDate": null,
+      "approxJoiningDateString": null,
+      "id": "ZCPvKfmhkO4"
+    },
+    {
+      "userInfo": {
+        "first_name": "Arup",
+        "last_name": "Deb",
+        "full_name": "Arup Deb",
+        "email": "arupdeb659@gmail.com",
+        "phone": "uhbugjbh",
+        "gender": "Male",
+        "marital_status": "Single",
+        "date_of_birth": null,
+        "date_of_birth_string": null,
+        "anniversary_date": null,
+        "anniversary_date_string": null
+      },
+      "whereHeardAboutUs": "Friend / Family",
+      "nameOfAttendant": "Trainer B",
+      "servicesOffered": "",
+      "approxJoiningDate": null,
+      "approxJoiningDateString": null,
+      "id": "q3t2P8-w43E"
+    },
+    {
+      "userInfo": {
+        "first_name": "Arup",
+        "last_name": "Deb",
+        "full_name": "Arup Deb",
+        "email": "arupdeb659@gmail.com",
+        "phone": "8463\\786",
+        "gender": "",
+        "marital_status": "Single",
+        "date_of_birth": null,
+        "date_of_birth_string": null,
+        "anniversary_date": null,
+        "anniversary_date_string": null
+      },
+      "whereHeardAboutUs": "Advertisement",
+      "nameOfAttendant": "Trainer C",
+      "servicesOffered": "",
+      "approxJoiningDate": null,
+      "approxJoiningDateString": null,
+      "id": "W9k_frNkJ60"
+    },
+    {
+      "userInfo": {
+        "first_name": "Arup",
+        "last_name": "Deb",
+        "full_name": "Arup Deb",
+        "email": "arupdeb659@gmail.com",
+        "phone": "rrrter",
+        "gender": "",
+        "marital_status": "Single",
+        "date_of_birth": null,
+        "date_of_birth_string": null,
+        "anniversary_date": null,
+        "anniversary_date_string": null
+      },
+      "whereHeardAboutUs": "Google Search",
+      "nameOfAttendant": "Trainer B",
+      "servicesOffered": "",
+      "approxJoiningDate": null,
+      "approxJoiningDateString": null,
+      "id": "a4jfO950GMc"
+    },
+    {
+      "userInfo": {
+        "first_name": "Arup",
+        "last_name": "Deb",
+        "full_name": "Arup Deb",
+        "email": "arupdeb659@gmail.com",
+        "phone": "6009985715",
+        "gender": "Male",
+        "marital_status": "Married",
+        "date_of_birth": "2026-06-26T18:30:00.000Z",
+        "date_of_birth_string": "2026-06-27",
+        "anniversary_date": "2026-06-26T18:30:00.000Z",
+        "anniversary_date_string": "2026-06-27"
+      },
+      "whereHeardAboutUs": "Social Media",
+      "nameOfAttendant": "Trainer B",
+      "servicesOffered": "Personal Training",
+      "approxJoiningDate": "2026-06-26T18:30:00.000Z",
+      "approxJoiningDateString": "2026-06-27",
+      "id": "2owPaBEcQXw"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
