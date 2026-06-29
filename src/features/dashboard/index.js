@@ -10,6 +10,10 @@ import {
 } from 'react-native';
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 
+import Membershipbilling from './modals/membership-billing';
+// ASSUMPTION: src/components/header exports a default component that accepts
+// `title` / `subtitle` props. Adjust this import + the props below to match
+// whatever your real Header component actually expects.
 import Header from '../../components/header';
 import BannerAds from './components/banner-ads';
 import SplashScreenAds from './components/splash-screen-ads';
@@ -132,6 +136,7 @@ export default function Dashboard({ navigation }) {
   var [showSplash, setShowSplash] = useState(true);
   var [selectedPlanMap, setSelectedPlanMap] = useState({});
   var [refreshing, setRefreshing] = useState(false);
+  var [showBilling, setShowBilling] = useState(false);
 
   var membershipData = useMemberships();
   var categories = membershipData.categories;
@@ -230,7 +235,10 @@ export default function Dashboard({ navigation }) {
             <Text style={styles.selectionSummaryCount}>{selectedPlansCount} plans selected</Text>
             <Text style={styles.selectionSummaryTotal}>{formatPrice(selectedTotal)}</Text>
           </View>
-          <TouchableOpacity style={styles.selectionSummaryNextButton} activeOpacity={0.85}>
+
+          <TouchableOpacity style={styles.selectionSummaryNextButton} activeOpacity={0.85}
+          onPress={() => setShowBilling(true)}
+          >
             <Text style={styles.selectionSummaryNextText}>Next</Text>
           </TouchableOpacity>
         </View>
@@ -244,7 +252,13 @@ export default function Dashboard({ navigation }) {
         </View>
       )}
 
-      <SplashScreenAds visible={showSplash} onDismiss={function () { setShowSplash(false); }} />
+      {/* <SplashScreenAds visible={showSplash} onDismiss={function () { setShowSplash(false); }} /> */}
+      <SplashScreenAds visible={showSplash} onDismiss={() => setShowSplash(false)} />
+        <Membershipbilling 
+          visible={showBilling}
+          onClose={() => setShowBilling(false)}
+          selectedPlans={selectedPlans}
+        />
     </SafeAreaView>
   );
 }
