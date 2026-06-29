@@ -700,7 +700,7 @@ export const styles = StyleSheet.create({
   discount: { fontSize: 19, 
     color: "#00c853", 
     fontWeight: "bold" },
-  payBtn: { backgroundColor: "#00a11b", 
+  payBtn: { backgroundColor: "#E53E36", 
     height: 52, 
     borderRadius: 26, 
     justifyContent: "center", 

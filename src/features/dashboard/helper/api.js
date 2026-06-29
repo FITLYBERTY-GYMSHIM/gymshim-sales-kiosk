@@ -139,6 +139,23 @@ export function transformMembershipData(rawPlans) {
   return categories;
 }
 
+
+export const fetchTrainers = async (branchId) => {
+  const snapshot = await getDocs(collection(db, "branches", branchId, "trainers"));
+  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+};
+
+export const addTrainer = async (branchId, trainerData) => {
+  return await addDoc(collection(db, "branches", branchId, "trainers"), {
+    ...trainerData,
+    createdAt: new Date().toISOString(),
+    ratingBreakdown: { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 },
+    totalRatings: 0,
+    rating: 0,
+  });
+};
+
+
 // ---- API call (swap later when real API is ready) -------------------------
 
 export async function fetchMembershipPlans() {

@@ -32,7 +32,7 @@ const COUPONS = {
   "LIBERTY50": { percent: 50, label: "50% OFF" },
 };
 
-const FloatingInput = ({ label, value, onChangeText, error, keyboardType }) => {
+const FloatingInput = ({ label, value, onChangeText, error, keyboardType, maxLength }) => {
   const [focused, setFocused] = useState(false);
   const animatedValue = useRef(new Animated.Value(value ? 1 : 0)).current;
 
@@ -52,7 +52,9 @@ const FloatingInput = ({ label, value, onChangeText, error, keyboardType }) => {
         <TextInput
           style={{ height: 28, marginTop: 22, marginBottom: 4, fontSize: 15, color: "#111", paddingHorizontal: 0, paddingVertical: 0, borderWidth: 0, outline: "none", outlineWidth: 0, boxShadow: "none", backgroundColor: "transparent" }}
           value={value} onChangeText={onChangeText} onFocus={handleFocus} onBlur={handleBlur}
-          keyboardType={keyboardType || "default"} underlineColorAndroid="transparent"
+          keyboardType={keyboardType || "default"} 
+          maxLength={maxLength}
+          underlineColorAndroid="transparent"
           autoComplete="off" autoCorrect={false} autoCapitalize="none"
           importantForAutofill="no" blurOnSubmit={true} returnKeyType="done"
         />
@@ -65,10 +67,25 @@ const FloatingInput = ({ label, value, onChangeText, error, keyboardType }) => {
 
 const FloatingDropdown = ({ label, options, value, onSelect, error }) => {
   const [visible, setVisible] = useState(false);
+  const [dropdownTop, setDropdownTop] = useState(0);
+  const [dropdownLeft, setDropdownLeft] = useState(0);
+  const [dropdownWidth, setDropdownWidth] = useState(0);
+  const fieldRef = useRef(null);
   const animatedValue = useRef(new Animated.Value(value ? 1 : 0)).current;
 
-  const handleOpen = () => { setVisible(true); Animated.timing(animatedValue, { toValue: 1, duration: 150, useNativeDriver: false }).start(); };
-  React.useEffect(() => { if (value) Animated.timing(animatedValue, { toValue: 1, duration: 150, useNativeDriver: false }).start(); }, [value]);
+  const handleOpen = () => {
+    fieldRef.current?.measure((fx, fy, width, height, px, py) => {
+      setDropdownTop(py + height);
+      setDropdownLeft(px);
+      setDropdownWidth(width);
+      setVisible(true);
+    });
+    Animated.timing(animatedValue, { toValue: 1, duration: 150, useNativeDriver: false }).start();
+  };
+
+  React.useEffect(() => {
+    if (value) Animated.timing(animatedValue, { toValue: 1, duration: 150, useNativeDriver: false }).start();
+  }, [value]);
 
   const labelTop      = animatedValue.interpolate({ inputRange: [0, 1], outputRange: [16, 4] });
   const labelFontSize = animatedValue.interpolate({ inputRange: [0, 1], outputRange: [14, 10] });
@@ -76,8 +93,17 @@ const FloatingDropdown = ({ label, options, value, onSelect, error }) => {
 
   return (
     <View style={styles.fieldWrapper}>
-      <TouchableOpacity style={[styles.inputBox, error && styles.inputError]} onPress={handleOpen} activeOpacity={0.8}>
-        <Animated.Text style={{ position: "absolute", left: 12, top: labelTop, fontSize: labelFontSize, color: labelColor, zIndex: 1, pointerEvents: "none", backgroundColor: "transparent" }}>
+      <TouchableOpacity
+        ref={fieldRef}
+        style={[styles.inputBox, error && styles.inputError]}
+        onPress={handleOpen}
+        activeOpacity={0.8}
+      >
+        <Animated.Text style={{
+          position: "absolute", left: 12, top: labelTop,
+          fontSize: labelFontSize, color: labelColor,
+          zIndex: 1, pointerEvents: "none", backgroundColor: "transparent"
+        }}>
           {label}
         </Animated.Text>
         <View style={{ flexDirection: "row", alignItems: "center", marginTop: 22, marginBottom: 4, height: 28 }}>
@@ -86,14 +112,42 @@ const FloatingDropdown = ({ label, options, value, onSelect, error }) => {
         </View>
       </TouchableOpacity>
       {error && <Text style={styles.errorText}>{error}</Text>}
-      <Modal transparent visible={visible} animationType="fade" statusBarTranslucent={true}>
-        <TouchableOpacity style={styles.modalOverlay} onPress={() => setVisible(false)}>
-          <View style={styles.dropdown}>
-            <FlatList data={options} keyExtractor={(item) => item} renderItem={({ item }) => (
-              <TouchableOpacity style={styles.dropdownItem} onPress={() => { onSelect(item); setVisible(false); }}>
-                <Text style={styles.dropdownItemText}>{item}</Text>
-              </TouchableOpacity>
-            )} />
+
+      <Modal transparent visible={visible} animationType="none" statusBarTranslucent={true}>
+        <TouchableOpacity
+          style={{ flex: 1 }}
+          activeOpacity={1}
+          onPress={() => setVisible(false)}
+        >
+          <View style={{
+            position: "absolute",
+            top: dropdownTop,
+            left: dropdownLeft,
+            width: dropdownWidth,
+            backgroundColor: "#fff",
+            borderRadius: 8,
+            borderWidth: 1,
+            borderColor: "#e0e0e0",
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 4 },
+            shadowOpacity: 0.12,
+            shadowRadius: 8,
+            elevation: 8,
+            overflow: "hidden",
+          }}>
+            <FlatList
+              data={options}
+              keyExtractor={(item) => item}
+              scrollEnabled={false}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  style={styles.dropdownItem}
+                  onPress={() => { onSelect(item); setVisible(false); }}
+                >
+                  <Text style={styles.dropdownItemText}>{item}</Text>
+                </TouchableOpacity>
+              )}
+            />
           </View>
         </TouchableOpacity>
       </Modal>
@@ -397,7 +451,12 @@ export default function Membershipbilling({ visible, onClose, selectedPlans }) {
           <View style={styles.bioContainer}>
             <View style={styles.formContainer}>
               <FloatingInput label="Name *"           value={form.name}            onChangeText={(v) => updateField("name", v)}          error={errors.name} />
-              <FloatingInput label="Phone"            value={form.phone}           onChangeText={(v) => updateField("phone", v)}         error={errors.phone} keyboardType="phone-pad" />
+              <FloatingInput label="Phone"            
+              value={form.phone}           
+              onChangeText={(v) => updateField("phone", v.replace(/[^0-9]/g, "").slice(0, 10))}         
+              error={errors.phone} 
+              keyboardType="phone-pad" 
+              maxLength= {10}/>
               <DateField     label="Birth Date"       value={form.birthDate}       onChange={(v) => updateField("birthDate", v)}         error={errors.birthDate} />
               <FloatingDropdown label="Marital Status" options={["Single", "Married", "Divorced", "Widowed"]} value={form.maritalStatus} onSelect={(v) => updateField("maritalStatus", v)} error={errors.maritalStatus} />
               <FloatingDropdown label="Gender"        options={["Male", "Female", "Other"]} value={form.gender} onSelect={(v) => updateField("gender", v)} error={errors.gender} />
@@ -540,10 +599,10 @@ export default function Membershipbilling({ visible, onClose, selectedPlans }) {
               <Text style={styles.pickerOptionText}>Take Photo</Text>
             </TouchableOpacity>
             <View style={styles.pickerDivider} />
-            <TouchableOpacity style={styles.pickerOption} onPress={openGallery}>
+            {/* <TouchableOpacity style={styles.pickerOption} onPress={openGallery}>
               <Ionicons name="image-outline" size={24} color="#1976d2" />
               <Text style={styles.pickerOptionText}>Choose from Gallery</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity style={styles.pickerCancel} onPress={() => setPickerModalVisible(false)}>
               <Text style={styles.pickerCancelText}>Cancel</Text>
             </TouchableOpacity>

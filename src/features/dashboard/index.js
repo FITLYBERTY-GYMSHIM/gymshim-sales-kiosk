@@ -7,19 +7,18 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   RefreshControl,
+  Modal,
 } from 'react-native';
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 
 import Membershipbilling from './modals/membership-billing';
-// ASSUMPTION: src/components/header exports a default component that accepts
-// `title` / `subtitle` props. Adjust this import + the props below to match
-// whatever your real Header component actually expects.
 import Header from '../../components/header';
 import BannerAds from './components/banner-ads';
 import SplashScreenAds from './components/splash-screen-ads';
 import styles, { COLORS } from './style-sheet';
 import PlanCard from './components/plan-card';
 import useMemberships from './helper/useMemberships';
+import GymTrainersScreen from './components/gym-trainers';
 
 // ---- Helpers ---------------------------------------------------------------
 
@@ -137,6 +136,7 @@ export default function Dashboard({ navigation }) {
   var [selectedPlanMap, setSelectedPlanMap] = useState({});
   var [refreshing, setRefreshing] = useState(false);
   var [showBilling, setShowBilling] = useState(false);
+  var [showTrainers, setShowTrainers] = useState(false); 
 
   var membershipData = useMemberships();
   var categories = membershipData.categories;
@@ -154,7 +154,6 @@ export default function Dashboard({ navigation }) {
   function handleTopMembershipPress(categoryId) {
     var category = categories.find(function (cat) { return cat.id === categoryId; });
     if (!category || !category.plans[0]) return;
-
     var plan = category.plans[0];
     setSelectedPlanMap(function (prev) {
       var next = Object.assign({}, prev);
@@ -177,12 +176,10 @@ export default function Dashboard({ navigation }) {
     setRefreshing(false);
   }
 
-  // Loading state
   if (loading && !refreshing) {
     return <LoadingState />;
   }
 
-  // Error state
   if (error && categories.length === 0) {
     return <ErrorState error={error} onRetry={refetch} />;
   }
@@ -227,6 +224,35 @@ export default function Dashboard({ navigation }) {
             />
           );
         })}
+
+        {/* ── Our Trainers Button ── */}
+        <TouchableOpacity
+          onPress={() => setShowTrainers(true)}
+          style={{
+            marginHorizontal: 16,
+            marginTop: 8,
+            marginBottom: 24,
+            backgroundColor: '#E53E36',
+            borderRadius: 12,
+            borderWidth: 1,
+            borderColor: '#E0E0E0',
+            flexDirection: 'row',
+            alignItems: 'center',
+            paddingHorizontal: 16,
+            paddingVertical: 14,
+            gap: 12,
+          }}
+        >
+          <View style={{ width: 42, height: 42, borderRadius: 21, backgroundColor: '#EEF4FF', justifyContent: 'center', alignItems: 'center' }}>
+            <Ionicons name="people-outline" size={22} color="#005b96" />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={{ fontSize: 15, fontWeight: '700', color: '#FFFFFF' }}>Our Trainers</Text>
+            <Text style={{ fontSize: 12, color: '#FFFFFF', marginTop: 1 }}>4 certified trainers available</Text>
+          </View>
+          <Ionicons name="chevron-forward" size={20} color="#005b96" />
+        </TouchableOpacity>
+
       </ScrollView>
 
       {selectedPlansCount > 0 ? (
@@ -235,9 +261,8 @@ export default function Dashboard({ navigation }) {
             <Text style={styles.selectionSummaryCount}>{selectedPlansCount} plans selected</Text>
             <Text style={styles.selectionSummaryTotal}>{formatPrice(selectedTotal)}</Text>
           </View>
-
           <TouchableOpacity style={styles.selectionSummaryNextButton} activeOpacity={0.85}
-          onPress={() => setShowBilling(true)}
+            onPress={() => setShowBilling(true)}
           >
             <Text style={styles.selectionSummaryNextText}>Next</Text>
           </TouchableOpacity>
@@ -252,13 +277,24 @@ export default function Dashboard({ navigation }) {
         </View>
       )}
 
-      {/* <SplashScreenAds visible={showSplash} onDismiss={function () { setShowSplash(false); }} /> */}
       <SplashScreenAds visible={showSplash} onDismiss={() => setShowSplash(false)} />
-        <Membershipbilling 
-          visible={showBilling}
-          onClose={() => setShowBilling(false)}
-          selectedPlans={selectedPlans}
-        />
+
+      <Membershipbilling
+        visible={showBilling}
+        onClose={() => setShowBilling(false)}
+        selectedPlans={selectedPlans}
+      />
+
+      {/* ── Trainers full screen Modal ── */}
+      <Modal
+        visible={showTrainers}
+        animationType="slide"
+        presentationStyle="fullScreen"
+        statusBarTranslucent
+      >
+        <GymTrainersScreen onClose={() => setShowTrainers(false)} />
+      </Modal>
+
     </SafeAreaView>
   );
 }
