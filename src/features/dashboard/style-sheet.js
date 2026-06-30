@@ -247,7 +247,7 @@ export default StyleSheet.create({
     borderRadius: 12,
     borderWidth: 1,
     borderColor: 'transparent',
-    padding: 14,
+    padding: 10,
     marginBottom: CARD_GAP,
     minHeight: 160,
     justifyContent: 'flex-start',
@@ -262,11 +262,11 @@ export default StyleSheet.create({
     borderColor: '#0D2B52',
   },
   cardHeaderRow: {
-    height: 36,
+    height: 24,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    marginBottom: 8,
+    marginBottom: 4,
   },
   popularBadge: {
     alignSelf: 'flex-start',
@@ -323,7 +323,7 @@ export default StyleSheet.create({
     marginLeft: 6,
   },
   subPrice: {
-    fontSize: 15,
+    fontSize: 19,
     color: COLORS.mutedText,
     marginTop: 6,
   },

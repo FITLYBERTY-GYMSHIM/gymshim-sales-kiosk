@@ -1,5 +1,4 @@
-import { membershipPlans } from '../../../data/membershipPlans';
-
+const API_BASE_URL = 'https://gymshim.in/api';
 // ---- Constants ------------------------------------------------------------
 
 const ICON_MAP = {
@@ -96,7 +95,7 @@ export function transformMembershipData(rawPlans) {
       return {
         id: plan._id,
         label: plan.name || calculateDurationLabel(duration, durationType),
-        price: basePrice,
+        price: rackRate,
         rackRate: rackRate,
         duration: calculateDurationUnit(duration, durationType),
         durationLabel: calculateDurationLabel(duration, durationType),
@@ -121,11 +120,15 @@ export function transformMembershipData(rawPlans) {
       return a.price - b.price;
     });
 
-    var firstPlan = grouped[type][0];
-    var subtitle =
-      firstPlan.activities && firstPlan.activities.length > 0
-        ? firstPlan.activities.join(', ')
-        : 'Membership plans';
+    var allActivities = [];
+    grouped[type].forEach(function (plan) {
+      if (plan.activities && plan.activities.length > 0) {
+        plan.activities.forEach(function (a) {
+          if (allActivities.indexOf(a) === -1) allActivities.push(a);
+        });
+      }
+    });
+    var subtitle = allActivities.length > 0 ? allActivities.join(', ') : 'Membership plans';
 
     return {
       id: type.toLowerCase().replace(/([a-z])([A-Z])/g, '$1-$2'),
@@ -156,20 +159,19 @@ export const addTrainer = async (branchId, trainerData) => {
 };
 
 
-// ---- API call (swap later when real API is ready) -------------------------
+// ---- API call 
 
 export async function fetchMembershipPlans() {
-  // TODO: When real API is ready, replace with:
-  // const response = await fetch('YOUR_API_URL');
-  // const data = await response.json();
-  // return data;
-
-  // For now, return dummy data
-  return membershipPlans;
+  const response = await fetch(`${API_BASE_URL}/sales-kiosk-membership-plans`);
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+  }
+  const data = await response.json();
+  return Array.isArray(data) ? data : [];
 }
 
 
-const BASE_URL = 'http://localhost:3000'; 
+const BASE_URL = 'http://localhost:3000';
 
 export const submitEnquiry = async (payload) => {
   const response = await fetch(`${BASE_URL}/enquiry`, {
