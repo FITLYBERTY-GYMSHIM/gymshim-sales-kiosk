@@ -1,83 +1,48 @@
-const BASE_URL = "http://localhost:3005";
+const BASE_URL = "https://gymshim.in";
 
-export const createMembership = async (form, selectedPlans) => {
-  const body = {
-    userInfo: {
-      name:             form.name,
-      phone:            form.phone,
-      phoneCountryCode: "91",
-    },
-    birthDate:        form.birthDate,
-    maritalStatus:    form.maritalStatus,
-    anniversaryDate:  form.anniversaryDate,
-    gender:           form.gender,
-    gstin:            form.gstin,
-    plan_id:          selectedPlans[0]?.id       || null,
-    duration:         selectedPlans[0]?.duration || "",
-    total:            String(selectedPlans.reduce((s, p) => s + p.price, 0)),
-    plans: selectedPlans.map((p) => ({
-            id:p.id,
-            label:p.label,
-            duration: p.duration,
-            price:p.price,
-          })),
-
-
-    billedInfo: {
-      payableAmount: String(selectedPlans.reduce((s, p) => s + p.price, 0)),
-    },
-
-    currency:         "INR",
-    currency_sign:    "₹",
-    status:           "active",
-    state:            "ACTIVE",
-    sale_type:        "FRESH_SALE",
-    is_active:        true,
-    draft:            false,
-    starts_at:        new Date().toISOString(),
-    starts_at_string: new Date().toDateString(),
-    createdAt:        new Date().toISOString(),
-  };
-
-  const response = await fetch(`${BASE_URL}/memberships`, {
-    method:  "POST",
-    headers: { "Content-Type": "application/json" },
-    body:    JSON.stringify(body),
-  });
-
-  if (!response.ok) {
-    const errText = await response.text();
-    throw new Error(`Membership creation failed: ${errText}`);
-  }
-
-  return response.json();
+const toApiDate = (date = new Date()) => {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
 };
 
-export const createPayment = async (membershipId, payableAmount) => {
+
+export const assignMembershipFromKiosk = async (
+  form,
+  selectedPlans,
+  payableAmount,
+  mode = "upi"
+) => {
+  const today = toApiDate();
+
   const body = {
-    membershipId:      membershipId,
-    amount:            String(payableAmount),
-    status:            "SUCCESS",
-    mode:              "UPI",
-    source:            "APP",
-    draft:             false,
-    invoiceDate:       new Date().toISOString(),
-    invoiceDateString: new Date().toDateString(),
-    paymentDate:       new Date().toISOString(),
-    paymentDateString: new Date().toDateString(),
-    createdAt:         new Date().toISOString(),
+    userInfo: {
+      phone: form.phone,
+      name: form.name,
+    
+    },
+    membershipPlanId: selectedPlans[0]?.id || "",
+    amount: Number(payableAmount),
+    date: today,
+    invoiceDate: today,
+    paymentDate: today,
+    mode,
+    source: "kiosk",
   };
 
-  const response = await fetch(`${BASE_URL}/payments`, {
-    method:  "POST",
+  const response = await fetch(`${BASE_URL}/api/assign-membership-from-sales-kiosk`, {
+    method: "POST",
     headers: { "Content-Type": "application/json" },
-    body:    JSON.stringify(body),
+    body: JSON.stringify(body),
   });
 
+  const data = await response.json().catch(() => ({}));
+
   if (!response.ok) {
-    const errText = await response.text();
-    throw new Error(`Payment creation failed: ${errText}`);
+    console.log("Server error response:", data);
+    throw new Error(data?.message || `Request failed with status ${response.status}`);
   }
 
-  return response.json();
+  return data.membership;
 };

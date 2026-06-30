@@ -239,7 +239,7 @@ export default function Dashboard({ navigation }) {
           </View>
           <View style={{ flex: 1 }}>
             <Text style={{ fontSize: 15, fontWeight: '700', color: '#FFFFFF' }}>Our Trainers</Text>
-            <Text style={{ fontSize: 12, color: '#FFFFFF', marginTop: 1 }}>4 certified trainers available</Text>
+            <Text style={{ fontSize: 14, color: '#FFFFFF', marginTop: 1 }}>4 certified trainers available</Text>
           </View>
           <Ionicons name="chevron-forward" size={20} color="#005b96" />
         </TouchableOpacity>
