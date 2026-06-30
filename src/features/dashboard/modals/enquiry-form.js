@@ -19,6 +19,15 @@ const formatDate = (d) => {
   return `${y}-${m}-${day}`;
 };
 
+const normalizePhone = (raw) => {
+  if (!raw) return '';
+  let digits = raw.replace(/\D/g, '');
+  if (digits.length > 10 && digits.startsWith('91')) {
+    digits = digits.slice(digits.length - 10);
+  }
+  return digits.slice(-10);
+};
+
 // ─── FloatingInput ────────────────────────────────────────────────────────────
 
 function FloatingInput({ label, value, onChangeText, keyboardType, required, error, icon }) {
@@ -341,32 +350,64 @@ export default function EnquiryPopup({ visible, onClose }) {
   };
 
   // ── Async submit with API call ─────────────────────────────────────────────
+  // ── Async submit with API call ─────────────────────────────────────────────
   const handleSubmit = async () => {
     if (!validate()) return;
+
+    const normalizedPhone = normalizePhone(phone);
+    if (normalizedPhone.length !== 10) {
+      setErrors(prev => ({ ...prev, phone: 'Enter a valid 10-digit Indian number' }));
+      return;
+    }
+
     setLoading(true);
     setApiError('');
 
     try {
-      await submitEnquiry({
+      const middleName = ''; // no UI field yet — wire up if/when added
+      const fullName = `${firstName.trim()} ${middleName} ${lastName.trim()}`
+        .replace(/\s+/g, ' ')
+        .trim();
+
+      // plain JS object — sent as real JSON, NOT FormData/stringified.
+      // userInfo stays a true nested object so the server's express.json()
+      // parser reads userInfo.name etc. correctly.
+      const payload = {
         userInfo: {
-          first_name:              firstName.trim(),
-          last_name:               lastName.trim(),
-          full_name:               `${firstName.trim()} ${lastName.trim()}`.trim(),
-          email:                   email.trim(),
-          phone:                   phone.trim(),
-          gender:                  gender,
-          marital_status:          marital,
-          date_of_birth:           dob || null,
-          date_of_birth_string:    dob ? formatDate(dob) : null,
-          anniversary_date:        anniversary || null,
-          anniversary_date_string: anniversary ? formatDate(anniversary) : null,
+          first_name: firstName.trim(),
+          middle_name: middleName,
+          last_name: lastName.trim(),
+          full_name: fullName,
+          email: email.trim(),
+          phone: normalizedPhone,
+          countryCode: 91,
+          isPhoneNumberVerified: false,
+          land_line_number: '', // no UI field yet
+          gender: gender || '',
+          address: '', // no UI field yet
+          date_of_birth: dob || null,
+          date_of_birth_string: dob ? formatDate(dob) : '',
+          anniversary_date: anniversary || null,
+          anniversary_date_string: anniversary ? formatDate(anniversary) : '',
+          marital_status: marital || '',
+          emergency_contact_person: '', // no UI field yet
+          emergency_contact_no: '', // no UI field yet
+          residential_address: '', // no UI field yet
+          apartment_name: '', // no UI field yet
         },
-        whereHeardAboutUs:       heardFrom,
-        nameOfAttendant:         attendant,
-        servicesOffered:         service,
-        approxJoiningDate:       joiningDate || null,
-        approxJoiningDateString: joiningDate ? formatDate(joiningDate) : null,
-      });
+        heardFrom: heardFrom || '',
+        attendant: attendant || '',
+        serviceOffered: service || '',
+        approxJoiningDate: joiningDate ? formatDate(joiningDate) : '',
+        // NOTE: photo (avatar) can't ride along in this JSON body as raw
+        // binary. Needs a separate upload step/endpoint or base64 — not
+        // wired up yet. avatar local uri is: ${avatar}
+      };
+
+      //console.log('[EnquiryPopup] submitting payload:', JSON.stringify(payload, null, 2));
+ console.log(payload);
+ 
+      await submitEnquiry(payload);
 
       setSubmitted(true); // success screen dikhao
     } catch (err) {
@@ -375,7 +416,6 @@ export default function EnquiryPopup({ visible, onClose }) {
       setLoading(false);
     }
   };
-
   // ── Countdown + spinner after successful submit ────────────────────────────
   useEffect(() => {
     if (!submitted) return;

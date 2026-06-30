@@ -169,21 +169,33 @@ export async function fetchMembershipPlans() {
 }
 
 
-const BASE_URL = 'http://localhost:3000'; 
+// api.js
+// api.js
+// api.js
+const BASE_URL = 'https://gymshim.in';
 
 export const submitEnquiry = async (payload) => {
-  const response = await fetch(`${BASE_URL}/enquiry`, {
+  const response = await fetch(`${BASE_URL}/api/create-enquiry-from-sales-kiosk`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      Accept: 'application/json',
     },
     body: JSON.stringify(payload),
   });
 
-  const json = await response.json();
+  console.log(response);
+
+
+  let json;
+  try {
+    json = await response.json();
+  } catch {
+    json = {};
+  }
 
   if (!response.ok) {
-    throw new Error(json.message || 'Server error');
+    throw new Error(json.message || `Server error (${response.status})`);
   }
 
   return json;
