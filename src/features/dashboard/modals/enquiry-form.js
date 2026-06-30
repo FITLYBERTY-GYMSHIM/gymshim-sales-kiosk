@@ -346,6 +346,27 @@ export default function EnquiryPopup({ visible, onClose }) {
     setLoading(true);
     setApiError('');
 
+    console.log('Enquiry payload:', {
+    userInfo: {
+      first_name: firstName.trim(),
+      last_name: lastName.trim(),
+      full_name: `${firstName.trim()} ${lastName.trim()}`.trim(),
+      email: email.trim(),
+      phone: phone.trim(),
+      gender: gender,
+      marital_status: marital,
+      date_of_birth: dob || null,
+      date_of_birth_string: dob ? formatDate(dob) : null,
+      anniversary_date: anniversary || null,
+      anniversary_date_string: anniversary ? formatDate(anniversary) : null,
+    },
+    whereHeardAboutUs: heardFrom,
+    nameOfAttendant: attendant,
+    servicesOffered: service,
+    approxJoiningDate: joiningDate || null,
+    approxJoiningDateString: joiningDate ? formatDate(joiningDate) : null,
+  });
+
     try {
       await submitEnquiry({
         userInfo: {

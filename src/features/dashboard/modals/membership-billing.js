@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import * as ImagePicker from "expo-image-picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { createMembership, createPayment } from "../../login/helper/api";
+import { assignMembershipFromKiosk } from "../../login/helper/api";
 import { useFonts, Nunito_400Regular, Nunito_600SemiBold, Nunito_700Bold } from "@expo-google-fonts/nunito";
 import * as SplashScreen from "expo-splash-screen";
 import {
@@ -408,29 +408,28 @@ export default function Membershipbilling({ visible, onClose, selectedPlans }) {
 
   // ── handlePay ──────────────────────────────────────────────────────────────
   const handlePay = async () => {
-    if (!validate()) return;
-    setLoading(true);
-    try {
-      // STEP 1 — create membership
-      const membership = await createMembership(form, selectedPlans);
-      console.log(" Membership created:", membership);
+  if (!validate()) return;
+  setLoading(true);
+  try {
+    const membership = await assignMembershipFromKiosk(
+      form,
+      selectedPlans,
+      payable,
+      "upi"
+    );
+    console.log("Membership assigned:", membership);
 
-      // STEP 2 — create payment
-      const payment = await createPayment(membership.id, payable);
-      console.log(" Payment created:", payment);
+    setPaidAmount(payable);
+    setCreatedMembershipId(membership._id);
+    setShowSuccess(true);
 
-      // STEP 3 — show success modal instead of Alert
-      setPaidAmount(payable);
-      setCreatedMembershipId(membership.id);
-      setShowSuccess(true);
-
-    } catch (err) {
-      console.error(" API error:", err);
-      Alert.alert("Payment Failed", err.message || "Something went wrong. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  } catch (err) {
+    console.error("API error:", err);
+    Alert.alert("Payment Failed", err.message || "Something went wrong. Please try again.");
+  } finally {
+    setLoading(false);
+  }
+};
 
   
   const handleSuccessDone = () => {

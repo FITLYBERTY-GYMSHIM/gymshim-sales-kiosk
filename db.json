@@ -385,6 +385,43 @@
       "starts_at_string": "Mon Jun 29 2026",
       "createdAt": "2026-06-29T05:44:22.912Z",
       "id": "4bPYsJLyPvg"
+    },
+    {
+      "userInfo": {
+        "name": "Sayan Deb",
+        "phone": "1234567890",
+        "phoneCountryCode": "91"
+      },
+      "birthDate": "23-45-6789",
+      "maritalStatus": "Single",
+      "anniversaryDate": "",
+      "gender": "Male",
+      "gstin": "",
+      "plan_id": "7fed09ed0501835d7ee99201",
+      "duration": "year",
+      "total": "8150",
+      "plans": [
+        {
+          "id": "7fed09ed0501835d7ee99201",
+          "label": "Liberty Basic",
+          "duration": "year",
+          "price": 8150
+        }
+      ],
+      "billedInfo": {
+        "payableAmount": "8150"
+      },
+      "currency": "INR",
+      "currency_sign": "₹",
+      "status": "active",
+      "state": "ACTIVE",
+      "sale_type": "FRESH_SALE",
+      "is_active": true,
+      "draft": false,
+      "starts_at": "2026-06-29T13:27:56.033Z",
+      "starts_at_string": "Mon Jun 29 2026",
+      "createdAt": "2026-06-29T13:27:56.033Z",
+      "id": "sthKZxL7me0"
     }
   ],
   "payments": [
@@ -527,9 +564,22 @@
       "paymentDateString": "Mon Jun 29 2026",
       "createdAt": "2026-06-29T05:44:22.958Z",
       "id": "IRd5sQSK5QQ"
+    },
+    {
+      "membershipId": "sthKZxL7me0",
+      "amount": "7742",
+      "status": "SUCCESS",
+      "mode": "UPI",
+      "source": "APP",
+      "draft": false,
+      "invoiceDate": "2026-06-29T13:27:56.056Z",
+      "invoiceDateString": "Mon Jun 29 2026",
+      "paymentDate": "2026-06-29T13:27:56.056Z",
+      "paymentDateString": "Mon Jun 29 2026",
+      "createdAt": "2026-06-29T13:27:56.056Z",
+      "id": "pcdf9T1mQqI"
     }
   ],
-
   "enquiry": [
     {
       "userInfo": {
@@ -635,6 +685,90 @@
       "approxJoiningDate": "2026-06-26T18:30:00.000Z",
       "approxJoiningDateString": "2026-06-27",
       "id": "2owPaBEcQXw"
+    },
+    {
+      "userInfo": {
+        "first_name": "Sayan",
+        "last_name": "Deb",
+        "full_name": "Sayan Deb",
+        "email": "sayandeb883@gmail.com",
+        "phone": "12345678",
+        "gender": "Male",
+        "marital_status": "Single",
+        "date_of_birth": null,
+        "date_of_birth_string": null,
+        "anniversary_date": null,
+        "anniversary_date_string": null
+      },
+      "whereHeardAboutUs": "Social Media",
+      "nameOfAttendant": "Trainer A",
+      "servicesOffered": "Gym Workout",
+      "approxJoiningDate": null,
+      "approxJoiningDateString": null,
+      "id": "hM3nz6KSU58"
+    },
+    {
+      "userInfo": {
+        "first_name": "Sayan",
+        "last_name": "Deb",
+        "full_name": "Sayan Deb",
+        "email": "sayandeb883@gmail.com",
+        "phone": "11234567890",
+        "gender": "Male",
+        "marital_status": "Single",
+        "date_of_birth": null,
+        "date_of_birth_string": null,
+        "anniversary_date": null,
+        "anniversary_date_string": null
+      },
+      "whereHeardAboutUs": "Social Media",
+      "nameOfAttendant": "Trainer A",
+      "servicesOffered": "",
+      "approxJoiningDate": null,
+      "approxJoiningDateString": null,
+      "id": "fiYBBQvc9cI"
+    },
+    {
+      "userInfo": {
+        "first_name": "Sayan",
+        "last_name": "Deb",
+        "full_name": "Sayan Deb",
+        "email": "sayandeb883@gmail.com",
+        "phone": "1324567890876543",
+        "gender": "Male",
+        "marital_status": "Single",
+        "date_of_birth": null,
+        "date_of_birth_string": null,
+        "anniversary_date": null,
+        "anniversary_date_string": null
+      },
+      "whereHeardAboutUs": "Social Media",
+      "nameOfAttendant": "Trainer A",
+      "servicesOffered": "",
+      "approxJoiningDate": null,
+      "approxJoiningDateString": null,
+      "id": "11ZVBnUmdSk"
+    },
+    {
+      "userInfo": {
+        "first_name": "Sayan",
+        "last_name": "Deb",
+        "full_name": "Sayan Deb",
+        "email": "sayandeb883@gmail.com",
+        "phone": "324567890-=",
+        "gender": "Male",
+        "marital_status": "Single",
+        "date_of_birth": null,
+        "date_of_birth_string": null,
+        "anniversary_date": null,
+        "anniversary_date_string": null
+      },
+      "whereHeardAboutUs": "Social Media",
+      "nameOfAttendant": "Trainer A",
+      "servicesOffered": "",
+      "approxJoiningDate": null,
+      "approxJoiningDateString": null,
+      "id": "M99Gbppb9J8"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

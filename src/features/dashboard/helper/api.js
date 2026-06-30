@@ -1,6 +1,5 @@
 import { membershipPlans } from '../../../data/membershipPlans';
 
-// ---- Constants ------------------------------------------------------------
 
 const ICON_MAP = {
   GymWorkout: 'dumbbell',
@@ -16,7 +15,7 @@ const CATEGORY_NAME_MAP = {
   LybertyMembership: 'Liberty Membership',
 };
 
-// ---- Helper functions -----------------------------------------------------
+
 
 function calculateDurationLabel(duration, durationType) {
   const type = durationType.toLowerCase();
@@ -71,7 +70,7 @@ function calculateSecondaryText(duration, durationType, basePrice, sessions) {
   return '\u20B9 ' + monthly.toLocaleString('en-IN') + ' / month';
 }
 
-// ---- Main functions -------------------------------------------------------
+
 
 export function transformMembershipData(rawPlans) {
   const grouped = {};
@@ -105,7 +104,7 @@ export function transformMembershipData(rawPlans) {
       };
     });
 
-    // Assign "Popular" badge to highest priced plan
+    
     if (plans.length > 0) {
       var maxPrice = Math.max.apply(null, plans.map(function (p) { return p.price; }));
       var popularPlan = plans.find(function (p) { return p.price === maxPrice; });
@@ -114,7 +113,7 @@ export function transformMembershipData(rawPlans) {
       }
     }
 
-    // Sort plans by price ascending
+    
     plans.sort(function (a, b) {
       if (a.badge === 'Popular' && b.badge !== 'Popular') return -1;
       if (a.badge !== 'Popular' && b.badge === 'Popular') return 1;
@@ -156,20 +155,15 @@ export const addTrainer = async (branchId, trainerData) => {
 };
 
 
-// ---- API call (swap later when real API is ready) -------------------------
+
 
 export async function fetchMembershipPlans() {
-  // TODO: When real API is ready, replace with:
-  // const response = await fetch('YOUR_API_URL');
-  // const data = await response.json();
-  // return data;
 
-  // For now, return dummy data
   return membershipPlans;
 }
 
 
-const BASE_URL = 'http://localhost:3000'; 
+const BASE_URL = 'http://localhost:3005'; 
 
 export const submitEnquiry = async (payload) => {
   const response = await fetch(`${BASE_URL}/enquiry`, {
@@ -188,3 +182,22 @@ export const submitEnquiry = async (payload) => {
 
   return json;
 };
+
+  export async function fetchBranchEmployees() {
+  const response = await fetch('https://gymshim.in/api/getBranchEmployees');
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch employees');
+  }
+
+  const data = await response.json();
+  const rawEmployees = data.employees || [];
+
+  return rawEmployees.map((emp) => ({
+    id: emp._id,
+    name: emp.name || 'Unnamed',
+    phone: emp.phone || '',
+    email: emp.email || '',
+  }));
+}
+
