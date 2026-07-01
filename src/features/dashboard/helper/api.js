@@ -220,6 +220,8 @@ export const submitEnquiry = async (payload) => {
     name: emp.name || 'Unnamed',
     phone: emp.phone || '',
     email: emp.email || '',
+    role: emp.role || 'Trainer',
+    specialization: emp.specialization || '',
   }));
 }
 
