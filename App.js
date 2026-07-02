@@ -5,6 +5,7 @@ import { Ionicons } from "@expo/vector-icons"; // npx expo install @expo/vector-
 
 import AppNavigator from "./src/features/app-navigator";
 import GalleryScreen from "./src/components/footer/gallery";
+import PlannerScreen from "./src/components/footer/planner";
 
 export default function App() {
   const [loaded] = useFonts({
@@ -18,7 +19,7 @@ export default function App() {
     "Nunito-ExtraLight": require("./src/assets/fonts/Nunito-ExtraLight.ttf"),
   });
 
-  // which tab is active — "home" is the default
+  // which tab is active — "Memberships" is the default
   const [activeTab, setActiveTab] = useState("Memberships");
 
   if (!loaded) return null;
@@ -29,12 +30,14 @@ export default function App() {
       <View style={styles.content}>
         {activeTab === "Memberships" ? (
           <AppNavigator />
-        ) : (
+        ) : activeTab === "gallery" ? (
           <GalleryScreen />
+        ) : (
+          <PlannerScreen />
         )}
       </View>
 
-      {/* Fixed footer tab bar — each half's background flips dark/light based on active tab */}
+      {/* Fixed footer tab bar — each button's background flips dark/light based on active tab */}
       <View style={styles.footer}>
         <TouchableOpacity
           style={[
@@ -44,8 +47,8 @@ export default function App() {
           onPress={() => setActiveTab("Memberships")}
           activeOpacity={0.7}
         >
-          <Ionicons name="Memberships" size={26} color="#fff" />
-          <Text style={styles.tabLabel}>Memberships</Text>
+          <Ionicons name="card" size={26} color="#fff" />
+          <Text style={styles.tabLabel}>MEMBERSHIPS</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -58,6 +61,18 @@ export default function App() {
         >
           <Ionicons name="image" size={26} color="#fff" />
           <Text style={styles.tabLabel}>GALLERY</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[
+            styles.tabButton,
+            { backgroundColor: activeTab === "planner" ? "#055075" : "#0e63a9" },
+          ]}
+          onPress={() => setActiveTab("planner")}
+          activeOpacity={0.7}
+        >
+          <Ionicons name="barbell" size={26} color="#fff" />
+          <Text style={styles.tabLabel}>WORKOUT PLANNER</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -74,10 +89,10 @@ const styles = StyleSheet.create({
   },
   footer: {
     flexDirection: "row",
-    // no shared background here — each tabButton sets its own 50% half
+    // no shared background here — each tabButton sets its own equal-width segment
   },
   tabButton: {
-    flex: 1, // each tab takes exactly 50% of the footer width
+    flex: 1, // each tab takes an equal share of the footer width
     alignItems: "center",
     justifyContent: "center",
     paddingTop: 10,
@@ -85,9 +100,10 @@ const styles = StyleSheet.create({
   },
   tabLabel: {
     marginTop: 4,
-    fontSize: 12,
+    fontSize: 11,
     fontFamily: "Nunito-Bold",
     color: "#fff",
-    letterSpacing: 0.5,
+    letterSpacing: 0.3,
+    textAlign: "center",
   },
 });

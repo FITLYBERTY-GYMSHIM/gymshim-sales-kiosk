@@ -8,7 +8,7 @@ import {
   ScrollView,
   Animated,
   SafeAreaView,
-  Dimensions,
+  useWindowDimensions,
   FlatList,
   StatusBar,
   Alert,
@@ -17,25 +17,15 @@ import Svg, { Path } from 'react-native-svg';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 
-const { width: SCREEN_W, height: SCREEN_H } = Dimensions.get('window');
-
-// ----------------------------------------------------------------
-// Sample gallery data — swap image URIs / titles / subtitles as needed.
-// Each item has its own explicit width & height for the card image,
-// plus a `photos` array that will hold that album's individual photos.
-// ----------------------------------------------------------------
 const GALLERY_ITEMS = [
   {
     id: '1',
     title: 'Part1',
     subtitle: 'We got the top class amenities, click to check out',
     image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d',
-    width: 550,
-    height: 566,
-    // Photos belonging to this album. Empty for now — add objects like
-    // { id: 'p1', uri: 'https://...' } here as photos get uploaded, and
-    // the album screen will render them automatically instead of
-    // placeholders.
+    row: 0,
+    flex: 550,
+    aspect: 566 / 550,
     photos: [],
   },
   {
@@ -43,8 +33,9 @@ const GALLERY_ITEMS = [
     title: 'Part2',
     subtitle: 'We got the top class amenities',
     image: 'https://images.unsplash.com/photo-1463320726281-696a485928c7',
-    width: 395,
-    height: 566,
+    row: 0,
+    flex: 395,
+    aspect: 566 / 395,
     photos: [],
   },
   {
@@ -52,8 +43,9 @@ const GALLERY_ITEMS = [
     title: 'Part3',
     subtitle: 'pp',
     image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438',
-    width: 374,
-    height: 528,
+    row: 1,
+    flex: 374,
+    aspect: 528 / 374,
     photos: [],
   },
   {
@@ -61,15 +53,13 @@ const GALLERY_ITEMS = [
     title: 'Part4',
     subtitle: 'We got the top class amenities',
     image: 'https://images.unsplash.com/photo-1530549387789-4c1017266635',
-    width: 570,
-    height: 528,
+    row: 1,
+    flex: 570,
+    aspect: 528 / 570,
     photos: [],
   },
 ];
 
-// Dropdown menu options shown when the + button is opened.
-// id matches the GALLERY_ITEMS id so we know which part's photos array
-// to push the captured photo into.
 const FAB_OPTIONS = [
   { id: '1', label: 'Part1' },
   { id: '2', label: 'Part2' },
@@ -77,10 +67,33 @@ const FAB_OPTIONS = [
   { id: '4', label: 'Part4' },
 ];
 
-// ==================================================================
-// SCREEN 1 — Grid of parts/albums
-// ==================================================================
+const clamp = (val, min, max) => Math.min(Math.max(val, min), max);
+
+
+const TABLET_MIN = 768;
+const LARGE_TABLET_MIN = 900;
+
+const GRID_H_PADDING = 16;
+const GRID_GAP = 10;
+
+function groupIntoRows(items) {
+  const rows = [];
+  items.forEach((item) => {
+    if (!rows[item.row]) rows[item.row] = [];
+    rows[item.row].push(item);
+  });
+  return rows;
+}
+
 function GalleryGrid({ items, onSelectItem, onCapturePhoto }) {
+  const { width: SCREEN_W, height: SCREEN_H } = useWindowDimensions();
+  const isTablet = SCREEN_W >= TABLET_MIN;
+  const isLargeTablet = SCREEN_W >= LARGE_TABLET_MIN;
+  const scaleFactor = isTablet
+    ? clamp(SCREEN_W / 1024, 0.78, 1.05)
+    : clamp(SCREEN_W / 375, 0.85, 1.12);
+  const f = (size) => Math.round(size * scaleFactor);
+
   const [fabOpen, setFabOpen] = useState(false);
   const rotateAnim = useRef(new Animated.Value(0)).current;
   const colorAnim = useRef(new Animated.Value(0)).current;
@@ -116,8 +129,6 @@ function GalleryGrid({ items, onSelectItem, onCapturePhoto }) {
     ]).start();
   };
 
-  // Tapping a part in the dropdown (e.g. "Part1") opens the camera.
-  // Whatever gets captured is pushed straight into that part's photo grid.
   const handleOptionPress = async (option) => {
     closeFab();
 
@@ -141,6 +152,10 @@ function GalleryGrid({ items, onSelectItem, onCapturePhoto }) {
     }
   };
 
+
+  const gridContentWidth = SCREEN_W - GRID_H_PADDING * 2;
+  const rows = groupIntoRows(items);
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <Svg
@@ -157,31 +172,55 @@ function GalleryGrid({ items, onSelectItem, onCapturePhoto }) {
       </Svg>
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        <View style={styles.header}>
+        <View style={[styles.header, { paddingHorizontal: isTablet ? 28 : 20 }]}>
           <View>
-            <Text style={styles.welcomeText}>WELCOME TO OUR</Text>
-            <Text style={styles.titleText}>Image Gallery</Text>
+            <Text style={[styles.welcomeText, { fontSize: f(12) }]}>WELCOME TO OUR</Text>
+            <Text style={[styles.titleText, { fontSize: f(26) }]}>Image Gallery</Text>
           </View>
         </View>
 
-        <View style={styles.grid}>
-          {items.map((item) => (
-            <TouchableOpacity
-              key={item.id}
-              style={[styles.card, { width: item.width, height: item.height }]}
-              activeOpacity={0.85}
-              onPress={() => handlePhotoPress(item)}
-            >
-              <Image source={{ uri: item.image }} style={styles.cardImage} />
-              <View style={styles.cardOverlay} />
-              <View style={styles.cardTextWrap}>
-                <Text style={styles.cardTitle}>{item.title}</Text>
-                <Text style={styles.cardSubtitle} numberOfLines={2}>
-                  {item.subtitle}
-                </Text>
+        <View style={[styles.grid, { paddingHorizontal: GRID_H_PADDING - 8 }]}>
+          {rows.map((rowItems, rowIndex) => {
+            const rowTotalFlex = rowItems.reduce((sum, it) => sum + it.flex, 0);
+            const availableRowWidth = gridContentWidth - GRID_GAP * (rowItems.length - 1);
+
+            return (
+              <View key={rowIndex} style={styles.gridRow}>
+                {rowItems.map((item, idx) => {
+                  const cardWidth = availableRowWidth * (item.flex / rowTotalFlex);
+                  const cardHeight = clamp(cardWidth * item.aspect, 140, SCREEN_H * 0.55);
+
+                  return (
+                    <TouchableOpacity
+                      key={item.id}
+                      style={[
+                        styles.card,
+                        {
+                          width: cardWidth,
+                          height: cardHeight,
+                          marginRight: idx < rowItems.length - 1 ? GRID_GAP : 0,
+                        },
+                      ]}
+                      activeOpacity={0.85}
+                      onPress={() => handlePhotoPress(item)}
+                    >
+                      <Image source={{ uri: item.image }} style={styles.cardImage} />
+                      <View style={styles.cardOverlay} />
+                      <View style={styles.cardTextWrap}>
+                        <Text style={[styles.cardTitle, { fontSize: f(28) }]}>{item.title}</Text>
+                        <Text
+                          style={[styles.cardSubtitle, { fontSize: f(13) }]}
+                          numberOfLines={2}
+                        >
+                          {item.subtitle}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  );
+                })}
               </View>
-            </TouchableOpacity>
-          ))}
+            );
+          })}
         </View>
       </ScrollView>
 
@@ -218,16 +257,28 @@ function GalleryGrid({ items, onSelectItem, onCapturePhoto }) {
   );
 }
 
-// ==================================================================
-// SCREEN 2 — Album view (hero image + grid of that part's photos)
-// ==================================================================
-const COLUMNS = 5;
-const GRID_PADDING = 16;
-const GRID_GAP = 8;
-const CELL_SIZE = (SCREEN_W - GRID_PADDING * 2 - GRID_GAP * (COLUMNS - 1)) / COLUMNS;
-const PLACEHOLDER_COUNT = 20; // visual placeholders until real photos exist
+
+const PLACEHOLDER_COUNT = 20; 
+
+
+function getColumns(width) {
+  if (width >= LARGE_TABLET_MIN) return 8;
+  if (width >= TABLET_MIN) return 6;
+  if (width >= 480) return 5;
+  return 4;
+}
 
 function AlbumGallery({ item, onBack, onGoHome, onSelectPhoto }) {
+  const { width: SCREEN_W } = useWindowDimensions();
+  const isTablet = SCREEN_W >= TABLET_MIN;
+
+  const columns = getColumns(SCREEN_W);
+  const gridPadding = 16;
+  const gridGap = 8;
+  const cellSize = (SCREEN_W - gridPadding * 2 - gridGap * (columns - 1)) / columns;
+
+  const heroHeight = clamp(SCREEN_W * (isTablet ? 0.22 : 0.32), 180, 320);
+
   const photos = item.photos || [];
 
   return (
@@ -244,18 +295,23 @@ function AlbumGallery({ item, onBack, onGoHome, onSelectPhoto }) {
       </View>
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        <View style={styles.hero}>
+        <View style={[styles.hero, { height: heroHeight }]}>
           <Image source={{ uri: item.image }} style={styles.heroImage} />
           <View style={styles.heroOverlay} />
           <Text style={styles.heroTitle}>{item.title}</Text>
         </View>
 
-        <View style={styles.albumGrid}>
+        <View
+          style={[
+            styles.albumGrid,
+            { paddingHorizontal: gridPadding, gap: gridGap },
+          ]}
+        >
           {photos.length > 0
             ? photos.map((photo, index) => (
                 <TouchableOpacity
                   key={photo.id || index}
-                  style={styles.cell}
+                  style={[styles.cell, { width: cellSize, height: cellSize }]}
                   activeOpacity={0.8}
                   onPress={() => onSelectPhoto(photos, index)}
                 >
@@ -263,7 +319,10 @@ function AlbumGallery({ item, onBack, onGoHome, onSelectPhoto }) {
                 </TouchableOpacity>
               ))
             : Array.from({ length: PLACEHOLDER_COUNT }).map((_, index) => (
-                <View key={`placeholder-${index}`} style={styles.cellPlaceholder} />
+                <View
+                  key={`placeholder-${index}`}
+                  style={[styles.cellPlaceholder, { width: cellSize, height: cellSize }]}
+                />
               ))}
         </View>
       </ScrollView>
@@ -271,10 +330,9 @@ function AlbumGallery({ item, onBack, onGoHome, onSelectPhoto }) {
   );
 }
 
-// ==================================================================
-// SCREEN 3 — Full-screen photo viewer
-// ==================================================================
+
 function PhotoViewer({ photos, initialIndex, title, onClose }) {
+  const { width: SCREEN_W, height: SCREEN_H } = useWindowDimensions();
   const [activeIndex, setActiveIndex] = useState(initialIndex);
 
   const onScrollEnd = (e) => {
@@ -296,8 +354,12 @@ function PhotoViewer({ photos, initialIndex, title, onClose }) {
         showsHorizontalScrollIndicator={false}
         onMomentumScrollEnd={onScrollEnd}
         renderItem={({ item }) => (
-          <View style={styles.viewerPage}>
-            <Image source={{ uri: item.uri }} style={styles.fullImage} resizeMode="contain" />
+          <View style={{ width: SCREEN_W, height: SCREEN_H, alignItems: 'center', justifyContent: 'center' }}>
+            <Image
+              source={{ uri: item.uri }}
+              style={{ width: SCREEN_W, height: SCREEN_H }}
+              resizeMode="contain"
+            />
           </View>
         )}
       />
@@ -316,22 +378,14 @@ function PhotoViewer({ photos, initialIndex, title, onClose }) {
   );
 }
 
-// ==================================================================
-// CONTAINER — decides which of the 3 screens above to show
-// ==================================================================
+
 export default function GalleryScreen() {
-  // screen: 'grid' | 'album' | 'viewer'
   const [screen, setScreen] = useState('grid');
-  // GALLERY_ITEMS lives in state now (not a plain constant) so that
-  // captured photos actually persist and re-render the grid/album.
   const [items, setItems] = useState(GALLERY_ITEMS);
   const [selectedItem, setSelectedItem] = useState(null);
   const [viewerPhotos, setViewerPhotos] = useState([]);
   const [viewerIndex, setViewerIndex] = useState(0);
 
-  // Called after a camera capture — pushes the new photo into the
-  // matching part's `photos` array, then opens that part's album page
-  // so the user immediately sees the photo they just added.
   const handleCapturePhoto = (partId, uri) => {
     setItems((prevItems) => {
       const updatedItems = prevItems.map((item) =>
@@ -409,28 +463,26 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     paddingTop: 30,
     paddingBottom: 20,
-    paddingHorizontal: 20,
   },
   welcomeText: {
     color: '#3F6FB8',
-    fontSize: 12,
     fontFamily: 'Nunito-Bold',
     letterSpacing: 1,
     marginBottom: 4,
   },
   titleText: {
-    fontSize: 26,
     fontFamily: 'Nunito-ExtraBold',
     color: '#11202B',
   },
   grid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
     backgroundColor: 'transparent',
-    padding: 8,
+    paddingVertical: 8,
+  },
+  gridRow: {
+    flexDirection: 'row',
+    marginBottom: 10,
   },
   card: {
-    margin: '1.5%',
     borderRadius: 16,
     overflow: 'hidden',
     backgroundColor: '#000',
@@ -453,12 +505,10 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     color: '#fff',
-    fontSize: 35,
     fontFamily: 'Nunito-ExtraBold',
   },
   cardSubtitle: {
     color: '#eee',
-    fontSize: 15,
     marginTop: 2,
     fontFamily: 'Nunito-Regular',
   },
@@ -542,7 +592,6 @@ const styles = StyleSheet.create({
   hero: {
     marginHorizontal: 16,
     marginTop: 8,
-    height: 230,
     borderRadius: 18,
     overflow: 'hidden',
     alignItems: 'center',
@@ -571,13 +620,9 @@ const styles = StyleSheet.create({
   albumGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    paddingHorizontal: GRID_PADDING,
     paddingTop: 20,
-    gap: GRID_GAP,
   },
   cell: {
-    width: CELL_SIZE,
-    height: CELL_SIZE,
     borderRadius: 6,
     overflow: 'hidden',
     backgroundColor: '#D9D9D9',
@@ -588,8 +633,6 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   cellPlaceholder: {
-    width: CELL_SIZE,
-    height: CELL_SIZE,
     borderRadius: 6,
     backgroundColor: '#D9D9D9',
   },
@@ -598,16 +641,6 @@ const styles = StyleSheet.create({
   viewerContainer: {
     flex: 1,
     backgroundColor: '#000',
-  },
-  viewerPage: {
-    width: SCREEN_W,
-    height: SCREEN_H,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  fullImage: {
-    width: SCREEN_W,
-    height: SCREEN_H,
   },
   closeButton: {
     position: 'absolute',
